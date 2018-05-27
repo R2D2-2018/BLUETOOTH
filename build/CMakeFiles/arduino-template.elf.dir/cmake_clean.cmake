@@ -1,11 +1,11 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/arduino-template.elf.dir/C_/ti-software/R2D2/Build-environment/toolchain/targets/arm32/cm3/atmel/sam3x/sam3x8e/deps/startup_sam3xa.c.obj"
+  "CMakeFiles/arduino-template.elf.dir/home/laurens/Documents/R2D2/Build-environment/toolchain/targets/arm32/cm3/atmel/sam3x/sam3x8e/deps/startup_sam3xa.c.obj"
   "CMakeFiles/arduino-template.elf.dir/src/wrap-hwlib.cpp.obj"
   "CMakeFiles/arduino-template.elf.dir/src/libc-stub.cpp.obj"
   "CMakeFiles/arduino-template.elf.dir/src/main.cpp.obj"
+  "CMakeFiles/arduino-template.elf.dir/home/laurens/Documents/R2D2/Build-environment/libraries/UART_LIB/src/uart_connection.cpp.obj"
   "arduino-template.elf.pdb"
   "arduino-template.elf"
-  "arduino-template.elf.manifest"
 )
 
 # Per-language clean rules from dependency scanning.

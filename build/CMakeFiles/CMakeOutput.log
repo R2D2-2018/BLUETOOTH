@@ -1,7 +1,7 @@
 The target system is: Generic -  - 
-The host system is: Windows - 10.0.16299 - AMD64
+The host system is: Linux - 4.15.0-20-generic - x86_64
 Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
-Compiler: C:/Program Files (x86)/GNU Tools ARM Embedded/7 2017-q4-major/bin/arm-none-eabi-g++.exe 
+Compiler: /usr/bin/arm-none-eabi-g++ 
 Build flags: 
 Id flags: -c 
 
@@ -11,39 +11,39 @@ The output was:
 
 Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CMakeCXXCompilerId.o"
 
-The CXX compiler identification is GNU, found in "C:/ti-software/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/3.10.1/CompilerIdCXX/CMakeCXXCompilerId.o"
+The CXX compiler identification is GNU, found in "/home/laurens/Documents/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.o"
 
 Detecting CXX compiler ABI info compiled with the following output:
-Change Dir: C:/ti-software/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp
+Change Dir: /home/laurens/Documents/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"C:/TDM-GCC-32/bin/mingw32-make.exe" "cmTC_f74ee/fast"
-C:/TDM-GCC-32/bin/mingw32-make.exe -f CMakeFiles\cmTC_f74ee.dir\build.make CMakeFiles/cmTC_f74ee.dir/build
-mingw32-make.exe[1]: Entering directory 'C:/ti-software/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_f74ee.dir/CMakeCXXCompilerABI.cpp.obj
-C:\PROGRA~2\GNUTOO~1\72017-~1\bin\AR10B2~1.EXE     -o CMakeFiles\cmTC_f74ee.dir\CMakeCXXCompilerABI.cpp.obj -c "C:\Program Files\CMake\share\cmake-3.10\Modules\CMakeCXXCompilerABI.cpp"
-Linking CXX static library libcmTC_f74ee.a
-"C:\Program Files\CMake\bin\cmake.exe" -P CMakeFiles\cmTC_f74ee.dir\cmake_clean_target.cmake
-"C:\Program Files\CMake\bin\cmake.exe" -E cmake_link_script CMakeFiles\cmTC_f74ee.dir\link.txt --verbose=1
-C:\PROGRA~2\GNUTOO~1\72017-~1\bin\ARM-NO~2.EXE qc libcmTC_f74ee.a  CMakeFiles/cmTC_f74ee.dir/CMakeCXXCompilerABI.cpp.obj
-C:\PROGRA~2\GNUTOO~1\72017-~1\bin\AR17F9~1.EXE libcmTC_f74ee.a
-mingw32-make.exe[1]: Leaving directory 'C:/ti-software/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/make" "cmTC_a6955/fast"
+/usr/bin/make -f CMakeFiles/cmTC_a6955.dir/build.make CMakeFiles/cmTC_a6955.dir/build
+make[1]: Entering directory '/home/laurens/Documents/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_a6955.dir/CMakeCXXCompilerABI.cpp.obj
+/usr/bin/arm-none-eabi-g++     -o CMakeFiles/cmTC_a6955.dir/CMakeCXXCompilerABI.cpp.obj -c /usr/share/cmake-3.10/Modules/CMakeCXXCompilerABI.cpp
+Linking CXX static library libcmTC_a6955.a
+/usr/bin/cmake -P CMakeFiles/cmTC_a6955.dir/cmake_clean_target.cmake
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a6955.dir/link.txt --verbose=1
+/usr/bin/arm-none-eabi-ar qc libcmTC_a6955.a  CMakeFiles/cmTC_a6955.dir/CMakeCXXCompilerABI.cpp.obj
+/usr/bin/arm-none-eabi-ranlib libcmTC_a6955.a
+make[1]: Leaving directory '/home/laurens/Documents/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp'
 
 
 Parsed CXX implicit link information from above output:
-  link line regex: [^( *|.*[/\])(arm-none-eabi-ld\.exe|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
-  ignore line: [Change Dir: C:/ti-software/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp]
+  link line regex: [^( *|.*[/\])(arm-none-eabi-ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
+  ignore line: [Change Dir: /home/laurens/Documents/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command:"C:/TDM-GCC-32/bin/mingw32-make.exe" "cmTC_f74ee/fast"]
-  ignore line: [C:/TDM-GCC-32/bin/mingw32-make.exe -f CMakeFiles\cmTC_f74ee.dir\build.make CMakeFiles/cmTC_f74ee.dir/build]
-  ignore line: [mingw32-make.exe[1]: Entering directory 'C:/ti-software/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp']
-  ignore line: [Building CXX object CMakeFiles/cmTC_f74ee.dir/CMakeCXXCompilerABI.cpp.obj]
-  ignore line: [C:\PROGRA~2\GNUTOO~1\72017-~1\bin\AR10B2~1.EXE     -o CMakeFiles\cmTC_f74ee.dir\CMakeCXXCompilerABI.cpp.obj -c "C:\Program Files\CMake\share\cmake-3.10\Modules\CMakeCXXCompilerABI.cpp"]
-  ignore line: [Linking CXX static library libcmTC_f74ee.a]
-  ignore line: ["C:\Program Files\CMake\bin\cmake.exe" -P CMakeFiles\cmTC_f74ee.dir\cmake_clean_target.cmake]
-  ignore line: ["C:\Program Files\CMake\bin\cmake.exe" -E cmake_link_script CMakeFiles\cmTC_f74ee.dir\link.txt --verbose=1]
-  ignore line: [C:\PROGRA~2\GNUTOO~1\72017-~1\bin\ARM-NO~2.EXE qc libcmTC_f74ee.a  CMakeFiles/cmTC_f74ee.dir/CMakeCXXCompilerABI.cpp.obj]
-  ignore line: [C:\PROGRA~2\GNUTOO~1\72017-~1\bin\AR17F9~1.EXE libcmTC_f74ee.a]
-  ignore line: [mingw32-make.exe[1]: Leaving directory 'C:/ti-software/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp']
+  ignore line: [Run Build Command:"/usr/bin/make" "cmTC_a6955/fast"]
+  ignore line: [/usr/bin/make -f CMakeFiles/cmTC_a6955.dir/build.make CMakeFiles/cmTC_a6955.dir/build]
+  ignore line: [make[1]: Entering directory '/home/laurens/Documents/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp']
+  ignore line: [Building CXX object CMakeFiles/cmTC_a6955.dir/CMakeCXXCompilerABI.cpp.obj]
+  ignore line: [/usr/bin/arm-none-eabi-g++     -o CMakeFiles/cmTC_a6955.dir/CMakeCXXCompilerABI.cpp.obj -c /usr/share/cmake-3.10/Modules/CMakeCXXCompilerABI.cpp]
+  ignore line: [Linking CXX static library libcmTC_a6955.a]
+  ignore line: [/usr/bin/cmake -P CMakeFiles/cmTC_a6955.dir/cmake_clean_target.cmake]
+  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a6955.dir/link.txt --verbose=1]
+  ignore line: [/usr/bin/arm-none-eabi-ar qc libcmTC_a6955.a  CMakeFiles/cmTC_a6955.dir/CMakeCXXCompilerABI.cpp.obj]
+  ignore line: [/usr/bin/arm-none-eabi-ranlib libcmTC_a6955.a]
+  ignore line: [make[1]: Leaving directory '/home/laurens/Documents/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp']
   ignore line: []
   implicit libs: []
   implicit dirs: []
@@ -53,19 +53,19 @@ Parsed CXX implicit link information from above output:
 
 
 Detecting CXX [-std=c++1z] compiler features compiled with the following output:
-Change Dir: C:/ti-software/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp
+Change Dir: /home/laurens/Documents/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"C:/TDM-GCC-32/bin/mingw32-make.exe" "cmTC_74090/fast"
-C:/TDM-GCC-32/bin/mingw32-make.exe -f CMakeFiles\cmTC_74090.dir\build.make CMakeFiles/cmTC_74090.dir/build
-mingw32-make.exe[1]: Entering directory 'C:/ti-software/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_74090.dir/feature_tests.cxx.obj
-C:\PROGRA~2\GNUTOO~1\72017-~1\bin\AR10B2~1.EXE    -std=c++1z -o CMakeFiles\cmTC_74090.dir\feature_tests.cxx.obj -c C:\ti-software\R2D2\Build-environment\modules\BLUETOOTH\build\CMakeFiles\feature_tests.cxx
-Linking CXX static library libcmTC_74090.a
-"C:\Program Files\CMake\bin\cmake.exe" -P CMakeFiles\cmTC_74090.dir\cmake_clean_target.cmake
-"C:\Program Files\CMake\bin\cmake.exe" -E cmake_link_script CMakeFiles\cmTC_74090.dir\link.txt --verbose=1
-C:\PROGRA~2\GNUTOO~1\72017-~1\bin\ARM-NO~2.EXE qc libcmTC_74090.a  CMakeFiles/cmTC_74090.dir/feature_tests.cxx.obj
-C:\PROGRA~2\GNUTOO~1\72017-~1\bin\AR17F9~1.EXE libcmTC_74090.a
-mingw32-make.exe[1]: Leaving directory 'C:/ti-software/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/make" "cmTC_e0915/fast"
+/usr/bin/make -f CMakeFiles/cmTC_e0915.dir/build.make CMakeFiles/cmTC_e0915.dir/build
+make[1]: Entering directory '/home/laurens/Documents/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_e0915.dir/feature_tests.cxx.obj
+/usr/bin/arm-none-eabi-g++    -std=c++1z -o CMakeFiles/cmTC_e0915.dir/feature_tests.cxx.obj -c /home/laurens/Documents/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/feature_tests.cxx
+Linking CXX static library libcmTC_e0915.a
+/usr/bin/cmake -P CMakeFiles/cmTC_e0915.dir/cmake_clean_target.cmake
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e0915.dir/link.txt --verbose=1
+/usr/bin/arm-none-eabi-ar qc libcmTC_e0915.a  CMakeFiles/cmTC_e0915.dir/feature_tests.cxx.obj
+/usr/bin/arm-none-eabi-ranlib libcmTC_e0915.a
+make[1]: Leaving directory '/home/laurens/Documents/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp'
 
 
     Feature record: CXX_FEATURE:1cxx_aggregate_default_initializers
@@ -128,19 +128,19 @@ mingw32-make.exe[1]: Leaving directory 'C:/ti-software/R2D2/Build-environment/mo
 
 
 Detecting CXX [-std=c++14] compiler features compiled with the following output:
-Change Dir: C:/ti-software/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp
+Change Dir: /home/laurens/Documents/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"C:/TDM-GCC-32/bin/mingw32-make.exe" "cmTC_49913/fast"
-C:/TDM-GCC-32/bin/mingw32-make.exe -f CMakeFiles\cmTC_49913.dir\build.make CMakeFiles/cmTC_49913.dir/build
-mingw32-make.exe[1]: Entering directory 'C:/ti-software/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_49913.dir/feature_tests.cxx.obj
-C:\PROGRA~2\GNUTOO~1\72017-~1\bin\AR10B2~1.EXE    -std=c++14 -o CMakeFiles\cmTC_49913.dir\feature_tests.cxx.obj -c C:\ti-software\R2D2\Build-environment\modules\BLUETOOTH\build\CMakeFiles\feature_tests.cxx
-Linking CXX static library libcmTC_49913.a
-"C:\Program Files\CMake\bin\cmake.exe" -P CMakeFiles\cmTC_49913.dir\cmake_clean_target.cmake
-"C:\Program Files\CMake\bin\cmake.exe" -E cmake_link_script CMakeFiles\cmTC_49913.dir\link.txt --verbose=1
-C:\PROGRA~2\GNUTOO~1\72017-~1\bin\ARM-NO~2.EXE qc libcmTC_49913.a  CMakeFiles/cmTC_49913.dir/feature_tests.cxx.obj
-C:\PROGRA~2\GNUTOO~1\72017-~1\bin\AR17F9~1.EXE libcmTC_49913.a
-mingw32-make.exe[1]: Leaving directory 'C:/ti-software/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/make" "cmTC_f406b/fast"
+/usr/bin/make -f CMakeFiles/cmTC_f406b.dir/build.make CMakeFiles/cmTC_f406b.dir/build
+make[1]: Entering directory '/home/laurens/Documents/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_f406b.dir/feature_tests.cxx.obj
+/usr/bin/arm-none-eabi-g++    -std=c++14 -o CMakeFiles/cmTC_f406b.dir/feature_tests.cxx.obj -c /home/laurens/Documents/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/feature_tests.cxx
+Linking CXX static library libcmTC_f406b.a
+/usr/bin/cmake -P CMakeFiles/cmTC_f406b.dir/cmake_clean_target.cmake
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f406b.dir/link.txt --verbose=1
+/usr/bin/arm-none-eabi-ar qc libcmTC_f406b.a  CMakeFiles/cmTC_f406b.dir/feature_tests.cxx.obj
+/usr/bin/arm-none-eabi-ranlib libcmTC_f406b.a
+make[1]: Leaving directory '/home/laurens/Documents/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp'
 
 
     Feature record: CXX_FEATURE:1cxx_aggregate_default_initializers
@@ -203,19 +203,19 @@ mingw32-make.exe[1]: Leaving directory 'C:/ti-software/R2D2/Build-environment/mo
 
 
 Detecting CXX [-std=c++11] compiler features compiled with the following output:
-Change Dir: C:/ti-software/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp
+Change Dir: /home/laurens/Documents/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"C:/TDM-GCC-32/bin/mingw32-make.exe" "cmTC_b94fe/fast"
-C:/TDM-GCC-32/bin/mingw32-make.exe -f CMakeFiles\cmTC_b94fe.dir\build.make CMakeFiles/cmTC_b94fe.dir/build
-mingw32-make.exe[1]: Entering directory 'C:/ti-software/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_b94fe.dir/feature_tests.cxx.obj
-C:\PROGRA~2\GNUTOO~1\72017-~1\bin\AR10B2~1.EXE    -std=c++11 -o CMakeFiles\cmTC_b94fe.dir\feature_tests.cxx.obj -c C:\ti-software\R2D2\Build-environment\modules\BLUETOOTH\build\CMakeFiles\feature_tests.cxx
-Linking CXX static library libcmTC_b94fe.a
-"C:\Program Files\CMake\bin\cmake.exe" -P CMakeFiles\cmTC_b94fe.dir\cmake_clean_target.cmake
-"C:\Program Files\CMake\bin\cmake.exe" -E cmake_link_script CMakeFiles\cmTC_b94fe.dir\link.txt --verbose=1
-C:\PROGRA~2\GNUTOO~1\72017-~1\bin\ARM-NO~2.EXE qc libcmTC_b94fe.a  CMakeFiles/cmTC_b94fe.dir/feature_tests.cxx.obj
-C:\PROGRA~2\GNUTOO~1\72017-~1\bin\AR17F9~1.EXE libcmTC_b94fe.a
-mingw32-make.exe[1]: Leaving directory 'C:/ti-software/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/make" "cmTC_a7ac5/fast"
+/usr/bin/make -f CMakeFiles/cmTC_a7ac5.dir/build.make CMakeFiles/cmTC_a7ac5.dir/build
+make[1]: Entering directory '/home/laurens/Documents/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_a7ac5.dir/feature_tests.cxx.obj
+/usr/bin/arm-none-eabi-g++    -std=c++11 -o CMakeFiles/cmTC_a7ac5.dir/feature_tests.cxx.obj -c /home/laurens/Documents/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/feature_tests.cxx
+Linking CXX static library libcmTC_a7ac5.a
+/usr/bin/cmake -P CMakeFiles/cmTC_a7ac5.dir/cmake_clean_target.cmake
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a7ac5.dir/link.txt --verbose=1
+/usr/bin/arm-none-eabi-ar qc libcmTC_a7ac5.a  CMakeFiles/cmTC_a7ac5.dir/feature_tests.cxx.obj
+/usr/bin/arm-none-eabi-ranlib libcmTC_a7ac5.a
+make[1]: Leaving directory '/home/laurens/Documents/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp'
 
 
     Feature record: CXX_FEATURE:0cxx_aggregate_default_initializers
@@ -278,19 +278,19 @@ mingw32-make.exe[1]: Leaving directory 'C:/ti-software/R2D2/Build-environment/mo
 
 
 Detecting CXX [-std=c++98] compiler features compiled with the following output:
-Change Dir: C:/ti-software/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp
+Change Dir: /home/laurens/Documents/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"C:/TDM-GCC-32/bin/mingw32-make.exe" "cmTC_ae013/fast"
-C:/TDM-GCC-32/bin/mingw32-make.exe -f CMakeFiles\cmTC_ae013.dir\build.make CMakeFiles/cmTC_ae013.dir/build
-mingw32-make.exe[1]: Entering directory 'C:/ti-software/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_ae013.dir/feature_tests.cxx.obj
-C:\PROGRA~2\GNUTOO~1\72017-~1\bin\AR10B2~1.EXE    -std=c++98 -o CMakeFiles\cmTC_ae013.dir\feature_tests.cxx.obj -c C:\ti-software\R2D2\Build-environment\modules\BLUETOOTH\build\CMakeFiles\feature_tests.cxx
-Linking CXX static library libcmTC_ae013.a
-"C:\Program Files\CMake\bin\cmake.exe" -P CMakeFiles\cmTC_ae013.dir\cmake_clean_target.cmake
-"C:\Program Files\CMake\bin\cmake.exe" -E cmake_link_script CMakeFiles\cmTC_ae013.dir\link.txt --verbose=1
-C:\PROGRA~2\GNUTOO~1\72017-~1\bin\ARM-NO~2.EXE qc libcmTC_ae013.a  CMakeFiles/cmTC_ae013.dir/feature_tests.cxx.obj
-C:\PROGRA~2\GNUTOO~1\72017-~1\bin\AR17F9~1.EXE libcmTC_ae013.a
-mingw32-make.exe[1]: Leaving directory 'C:/ti-software/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/make" "cmTC_38ebe/fast"
+/usr/bin/make -f CMakeFiles/cmTC_38ebe.dir/build.make CMakeFiles/cmTC_38ebe.dir/build
+make[1]: Entering directory '/home/laurens/Documents/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_38ebe.dir/feature_tests.cxx.obj
+/usr/bin/arm-none-eabi-g++    -std=c++98 -o CMakeFiles/cmTC_38ebe.dir/feature_tests.cxx.obj -c /home/laurens/Documents/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/feature_tests.cxx
+Linking CXX static library libcmTC_38ebe.a
+/usr/bin/cmake -P CMakeFiles/cmTC_38ebe.dir/cmake_clean_target.cmake
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_38ebe.dir/link.txt --verbose=1
+/usr/bin/arm-none-eabi-ar qc libcmTC_38ebe.a  CMakeFiles/cmTC_38ebe.dir/feature_tests.cxx.obj
+/usr/bin/arm-none-eabi-ranlib libcmTC_38ebe.a
+make[1]: Leaving directory '/home/laurens/Documents/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp'
 
 
     Feature record: CXX_FEATURE:0cxx_aggregate_default_initializers
@@ -351,13 +351,13 @@ mingw32-make.exe[1]: Leaving directory 'C:/ti-software/R2D2/Build-environment/mo
     Feature record: CXX_FEATURE:0cxx_variadic_macros
     Feature record: CXX_FEATURE:0cxx_variadic_templates
 Checking whether the ASM compiler is GNU using "--version" matched "(GNU assembler)|(GCC)|(Free Software Foundation)":
-arm-none-eabi-gcc.exe (GNU Tools for Arm Embedded Processors 7-2017-q4-major) 7.2.1 20170904 (release) [ARM/embedded-7-branch revision 255204]
-Copyright (C) 2017 Free Software Foundation, Inc.
+arm-none-eabi-gcc (15:6.3.1+svn253039-1build1) 6.3.1 20170620
+Copyright (C) 2016 Free Software Foundation, Inc.
 This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
-Compiler: C:/Program Files (x86)/GNU Tools ARM Embedded/7 2017-q4-major/bin/arm-none-eabi-gcc.exe 
+Compiler: /usr/bin/arm-none-eabi-gcc 
 Build flags: 
 Id flags: -c 
 
@@ -367,39 +367,39 @@ The output was:
 
 Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CMakeCCompilerId.o"
 
-The C compiler identification is GNU, found in "C:/ti-software/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/3.10.1/CompilerIdC/CMakeCCompilerId.o"
+The C compiler identification is GNU, found in "/home/laurens/Documents/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.o"
 
 Detecting C compiler ABI info compiled with the following output:
-Change Dir: C:/ti-software/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp
+Change Dir: /home/laurens/Documents/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"C:/TDM-GCC-32/bin/mingw32-make.exe" "cmTC_0bd12/fast"
-C:/TDM-GCC-32/bin/mingw32-make.exe -f CMakeFiles\cmTC_0bd12.dir\build.make CMakeFiles/cmTC_0bd12.dir/build
-mingw32-make.exe[1]: Entering directory 'C:/ti-software/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_0bd12.dir/CMakeCCompilerABI.c.obj
-C:\PROGRA~2\GNUTOO~1\72017-~1\bin\AR19DD~1.EXE    -o CMakeFiles\cmTC_0bd12.dir\CMakeCCompilerABI.c.obj   -c "C:\Program Files\CMake\share\cmake-3.10\Modules\CMakeCCompilerABI.c"
-Linking C static library libcmTC_0bd12.a
-"C:\Program Files\CMake\bin\cmake.exe" -P CMakeFiles\cmTC_0bd12.dir\cmake_clean_target.cmake
-"C:\Program Files\CMake\bin\cmake.exe" -E cmake_link_script CMakeFiles\cmTC_0bd12.dir\link.txt --verbose=1
-C:\PROGRA~2\GNUTOO~1\72017-~1\bin\ARM-NO~2.EXE qc libcmTC_0bd12.a  CMakeFiles/cmTC_0bd12.dir/CMakeCCompilerABI.c.obj
-C:\PROGRA~2\GNUTOO~1\72017-~1\bin\AR17F9~1.EXE libcmTC_0bd12.a
-mingw32-make.exe[1]: Leaving directory 'C:/ti-software/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/make" "cmTC_76e6c/fast"
+/usr/bin/make -f CMakeFiles/cmTC_76e6c.dir/build.make CMakeFiles/cmTC_76e6c.dir/build
+make[1]: Entering directory '/home/laurens/Documents/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_76e6c.dir/CMakeCCompilerABI.c.obj
+/usr/bin/arm-none-eabi-gcc    -o CMakeFiles/cmTC_76e6c.dir/CMakeCCompilerABI.c.obj   -c /usr/share/cmake-3.10/Modules/CMakeCCompilerABI.c
+Linking C static library libcmTC_76e6c.a
+/usr/bin/cmake -P CMakeFiles/cmTC_76e6c.dir/cmake_clean_target.cmake
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_76e6c.dir/link.txt --verbose=1
+/usr/bin/arm-none-eabi-ar qc libcmTC_76e6c.a  CMakeFiles/cmTC_76e6c.dir/CMakeCCompilerABI.c.obj
+/usr/bin/arm-none-eabi-ranlib libcmTC_76e6c.a
+make[1]: Leaving directory '/home/laurens/Documents/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp'
 
 
 Parsed C implicit link information from above output:
-  link line regex: [^( *|.*[/\])(arm-none-eabi-ld\.exe|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
-  ignore line: [Change Dir: C:/ti-software/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp]
+  link line regex: [^( *|.*[/\])(arm-none-eabi-ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
+  ignore line: [Change Dir: /home/laurens/Documents/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command:"C:/TDM-GCC-32/bin/mingw32-make.exe" "cmTC_0bd12/fast"]
-  ignore line: [C:/TDM-GCC-32/bin/mingw32-make.exe -f CMakeFiles\cmTC_0bd12.dir\build.make CMakeFiles/cmTC_0bd12.dir/build]
-  ignore line: [mingw32-make.exe[1]: Entering directory 'C:/ti-software/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp']
-  ignore line: [Building C object CMakeFiles/cmTC_0bd12.dir/CMakeCCompilerABI.c.obj]
-  ignore line: [C:\PROGRA~2\GNUTOO~1\72017-~1\bin\AR19DD~1.EXE    -o CMakeFiles\cmTC_0bd12.dir\CMakeCCompilerABI.c.obj   -c "C:\Program Files\CMake\share\cmake-3.10\Modules\CMakeCCompilerABI.c"]
-  ignore line: [Linking C static library libcmTC_0bd12.a]
-  ignore line: ["C:\Program Files\CMake\bin\cmake.exe" -P CMakeFiles\cmTC_0bd12.dir\cmake_clean_target.cmake]
-  ignore line: ["C:\Program Files\CMake\bin\cmake.exe" -E cmake_link_script CMakeFiles\cmTC_0bd12.dir\link.txt --verbose=1]
-  ignore line: [C:\PROGRA~2\GNUTOO~1\72017-~1\bin\ARM-NO~2.EXE qc libcmTC_0bd12.a  CMakeFiles/cmTC_0bd12.dir/CMakeCCompilerABI.c.obj]
-  ignore line: [C:\PROGRA~2\GNUTOO~1\72017-~1\bin\AR17F9~1.EXE libcmTC_0bd12.a]
-  ignore line: [mingw32-make.exe[1]: Leaving directory 'C:/ti-software/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp']
+  ignore line: [Run Build Command:"/usr/bin/make" "cmTC_76e6c/fast"]
+  ignore line: [/usr/bin/make -f CMakeFiles/cmTC_76e6c.dir/build.make CMakeFiles/cmTC_76e6c.dir/build]
+  ignore line: [make[1]: Entering directory '/home/laurens/Documents/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp']
+  ignore line: [Building C object CMakeFiles/cmTC_76e6c.dir/CMakeCCompilerABI.c.obj]
+  ignore line: [/usr/bin/arm-none-eabi-gcc    -o CMakeFiles/cmTC_76e6c.dir/CMakeCCompilerABI.c.obj   -c /usr/share/cmake-3.10/Modules/CMakeCCompilerABI.c]
+  ignore line: [Linking C static library libcmTC_76e6c.a]
+  ignore line: [/usr/bin/cmake -P CMakeFiles/cmTC_76e6c.dir/cmake_clean_target.cmake]
+  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_76e6c.dir/link.txt --verbose=1]
+  ignore line: [/usr/bin/arm-none-eabi-ar qc libcmTC_76e6c.a  CMakeFiles/cmTC_76e6c.dir/CMakeCCompilerABI.c.obj]
+  ignore line: [/usr/bin/arm-none-eabi-ranlib libcmTC_76e6c.a]
+  ignore line: [make[1]: Leaving directory '/home/laurens/Documents/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp']
   ignore line: []
   implicit libs: []
   implicit dirs: []
@@ -409,19 +409,19 @@ Parsed C implicit link information from above output:
 
 
 Detecting C [-std=c11] compiler features compiled with the following output:
-Change Dir: C:/ti-software/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp
+Change Dir: /home/laurens/Documents/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"C:/TDM-GCC-32/bin/mingw32-make.exe" "cmTC_47fcc/fast"
-C:/TDM-GCC-32/bin/mingw32-make.exe -f CMakeFiles\cmTC_47fcc.dir\build.make CMakeFiles/cmTC_47fcc.dir/build
-mingw32-make.exe[1]: Entering directory 'C:/ti-software/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_47fcc.dir/feature_tests.c.obj
-C:\PROGRA~2\GNUTOO~1\72017-~1\bin\AR19DD~1.EXE   -std=c11 -o CMakeFiles\cmTC_47fcc.dir\feature_tests.c.obj   -c C:\ti-software\R2D2\Build-environment\modules\BLUETOOTH\build\CMakeFiles\feature_tests.c
-Linking C static library libcmTC_47fcc.a
-"C:\Program Files\CMake\bin\cmake.exe" -P CMakeFiles\cmTC_47fcc.dir\cmake_clean_target.cmake
-"C:\Program Files\CMake\bin\cmake.exe" -E cmake_link_script CMakeFiles\cmTC_47fcc.dir\link.txt --verbose=1
-C:\PROGRA~2\GNUTOO~1\72017-~1\bin\ARM-NO~2.EXE qc libcmTC_47fcc.a  CMakeFiles/cmTC_47fcc.dir/feature_tests.c.obj
-C:\PROGRA~2\GNUTOO~1\72017-~1\bin\AR17F9~1.EXE libcmTC_47fcc.a
-mingw32-make.exe[1]: Leaving directory 'C:/ti-software/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/make" "cmTC_8d556/fast"
+/usr/bin/make -f CMakeFiles/cmTC_8d556.dir/build.make CMakeFiles/cmTC_8d556.dir/build
+make[1]: Entering directory '/home/laurens/Documents/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_8d556.dir/feature_tests.c.obj
+/usr/bin/arm-none-eabi-gcc   -std=c11 -o CMakeFiles/cmTC_8d556.dir/feature_tests.c.obj   -c /home/laurens/Documents/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/feature_tests.c
+Linking C static library libcmTC_8d556.a
+/usr/bin/cmake -P CMakeFiles/cmTC_8d556.dir/cmake_clean_target.cmake
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_8d556.dir/link.txt --verbose=1
+/usr/bin/arm-none-eabi-ar qc libcmTC_8d556.a  CMakeFiles/cmTC_8d556.dir/feature_tests.c.obj
+/usr/bin/arm-none-eabi-ranlib libcmTC_8d556.a
+make[1]: Leaving directory '/home/laurens/Documents/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp'
 
 
     Feature record: C_FEATURE:1c_function_prototypes
@@ -431,19 +431,19 @@ mingw32-make.exe[1]: Leaving directory 'C:/ti-software/R2D2/Build-environment/mo
 
 
 Detecting C [-std=c99] compiler features compiled with the following output:
-Change Dir: C:/ti-software/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp
+Change Dir: /home/laurens/Documents/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"C:/TDM-GCC-32/bin/mingw32-make.exe" "cmTC_a6f4b/fast"
-C:/TDM-GCC-32/bin/mingw32-make.exe -f CMakeFiles\cmTC_a6f4b.dir\build.make CMakeFiles/cmTC_a6f4b.dir/build
-mingw32-make.exe[1]: Entering directory 'C:/ti-software/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_a6f4b.dir/feature_tests.c.obj
-C:\PROGRA~2\GNUTOO~1\72017-~1\bin\AR19DD~1.EXE   -std=c99 -o CMakeFiles\cmTC_a6f4b.dir\feature_tests.c.obj   -c C:\ti-software\R2D2\Build-environment\modules\BLUETOOTH\build\CMakeFiles\feature_tests.c
-Linking C static library libcmTC_a6f4b.a
-"C:\Program Files\CMake\bin\cmake.exe" -P CMakeFiles\cmTC_a6f4b.dir\cmake_clean_target.cmake
-"C:\Program Files\CMake\bin\cmake.exe" -E cmake_link_script CMakeFiles\cmTC_a6f4b.dir\link.txt --verbose=1
-C:\PROGRA~2\GNUTOO~1\72017-~1\bin\ARM-NO~2.EXE qc libcmTC_a6f4b.a  CMakeFiles/cmTC_a6f4b.dir/feature_tests.c.obj
-C:\PROGRA~2\GNUTOO~1\72017-~1\bin\AR17F9~1.EXE libcmTC_a6f4b.a
-mingw32-make.exe[1]: Leaving directory 'C:/ti-software/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/make" "cmTC_c1a85/fast"
+/usr/bin/make -f CMakeFiles/cmTC_c1a85.dir/build.make CMakeFiles/cmTC_c1a85.dir/build
+make[1]: Entering directory '/home/laurens/Documents/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_c1a85.dir/feature_tests.c.obj
+/usr/bin/arm-none-eabi-gcc   -std=c99 -o CMakeFiles/cmTC_c1a85.dir/feature_tests.c.obj   -c /home/laurens/Documents/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/feature_tests.c
+Linking C static library libcmTC_c1a85.a
+/usr/bin/cmake -P CMakeFiles/cmTC_c1a85.dir/cmake_clean_target.cmake
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_c1a85.dir/link.txt --verbose=1
+/usr/bin/arm-none-eabi-ar qc libcmTC_c1a85.a  CMakeFiles/cmTC_c1a85.dir/feature_tests.c.obj
+/usr/bin/arm-none-eabi-ranlib libcmTC_c1a85.a
+make[1]: Leaving directory '/home/laurens/Documents/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp'
 
 
     Feature record: C_FEATURE:1c_function_prototypes
@@ -453,19 +453,19 @@ mingw32-make.exe[1]: Leaving directory 'C:/ti-software/R2D2/Build-environment/mo
 
 
 Detecting C [-std=c90] compiler features compiled with the following output:
-Change Dir: C:/ti-software/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp
+Change Dir: /home/laurens/Documents/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"C:/TDM-GCC-32/bin/mingw32-make.exe" "cmTC_0b953/fast"
-C:/TDM-GCC-32/bin/mingw32-make.exe -f CMakeFiles\cmTC_0b953.dir\build.make CMakeFiles/cmTC_0b953.dir/build
-mingw32-make.exe[1]: Entering directory 'C:/ti-software/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_0b953.dir/feature_tests.c.obj
-C:\PROGRA~2\GNUTOO~1\72017-~1\bin\AR19DD~1.EXE   -std=c90 -o CMakeFiles\cmTC_0b953.dir\feature_tests.c.obj   -c C:\ti-software\R2D2\Build-environment\modules\BLUETOOTH\build\CMakeFiles\feature_tests.c
-Linking C static library libcmTC_0b953.a
-"C:\Program Files\CMake\bin\cmake.exe" -P CMakeFiles\cmTC_0b953.dir\cmake_clean_target.cmake
-"C:\Program Files\CMake\bin\cmake.exe" -E cmake_link_script CMakeFiles\cmTC_0b953.dir\link.txt --verbose=1
-C:\PROGRA~2\GNUTOO~1\72017-~1\bin\ARM-NO~2.EXE qc libcmTC_0b953.a  CMakeFiles/cmTC_0b953.dir/feature_tests.c.obj
-C:\PROGRA~2\GNUTOO~1\72017-~1\bin\AR17F9~1.EXE libcmTC_0b953.a
-mingw32-make.exe[1]: Leaving directory 'C:/ti-software/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/make" "cmTC_684ae/fast"
+/usr/bin/make -f CMakeFiles/cmTC_684ae.dir/build.make CMakeFiles/cmTC_684ae.dir/build
+make[1]: Entering directory '/home/laurens/Documents/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_684ae.dir/feature_tests.c.obj
+/usr/bin/arm-none-eabi-gcc   -std=c90 -o CMakeFiles/cmTC_684ae.dir/feature_tests.c.obj   -c /home/laurens/Documents/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/feature_tests.c
+Linking C static library libcmTC_684ae.a
+/usr/bin/cmake -P CMakeFiles/cmTC_684ae.dir/cmake_clean_target.cmake
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_684ae.dir/link.txt --verbose=1
+/usr/bin/arm-none-eabi-ar qc libcmTC_684ae.a  CMakeFiles/cmTC_684ae.dir/feature_tests.c.obj
+/usr/bin/arm-none-eabi-ranlib libcmTC_684ae.a
+make[1]: Leaving directory '/home/laurens/Documents/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/CMakeTmp'
 
 
     Feature record: C_FEATURE:1c_function_prototypes

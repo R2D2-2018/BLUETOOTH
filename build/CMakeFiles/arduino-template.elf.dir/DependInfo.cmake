@@ -5,7 +5,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "C:/ti-software/R2D2/Build-environment/toolchain/targets/arm32/cm3/atmel/sam3x/sam3x8e/deps/startup_sam3xa.c" "C:/ti-software/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/arduino-template.elf.dir/C_/ti-software/R2D2/Build-environment/toolchain/targets/arm32/cm3/atmel/sam3x/sam3x8e/deps/startup_sam3xa.c.obj"
+  "/home/laurens/Documents/R2D2/Build-environment/toolchain/targets/arm32/cm3/atmel/sam3x/sam3x8e/deps/startup_sam3xa.c" "/home/laurens/Documents/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/arduino-template.elf.dir/home/laurens/Documents/R2D2/Build-environment/toolchain/targets/arm32/cm3/atmel/sam3x/sam3x8e/deps/startup_sam3xa.c.obj"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 
@@ -26,9 +26,10 @@ set(CMAKE_C_TARGET_INCLUDE_PATH
   "../../../toolchain/targets/arm32/cm3/atmel/sam3x/deps"
   )
 set(CMAKE_DEPENDS_CHECK_CXX
-  "C:/ti-software/R2D2/Build-environment/modules/BLUETOOTH/src/libc-stub.cpp" "C:/ti-software/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/arduino-template.elf.dir/src/libc-stub.cpp.obj"
-  "C:/ti-software/R2D2/Build-environment/modules/BLUETOOTH/src/main.cpp" "C:/ti-software/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/arduino-template.elf.dir/src/main.cpp.obj"
-  "C:/ti-software/R2D2/Build-environment/modules/BLUETOOTH/src/wrap-hwlib.cpp" "C:/ti-software/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/arduino-template.elf.dir/src/wrap-hwlib.cpp.obj"
+  "/home/laurens/Documents/R2D2/Build-environment/libraries/UART_LIB/src/uart_connection.cpp" "/home/laurens/Documents/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/arduino-template.elf.dir/home/laurens/Documents/R2D2/Build-environment/libraries/UART_LIB/src/uart_connection.cpp.obj"
+  "/home/laurens/Documents/R2D2/Build-environment/modules/BLUETOOTH/src/libc-stub.cpp" "/home/laurens/Documents/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/arduino-template.elf.dir/src/libc-stub.cpp.obj"
+  "/home/laurens/Documents/R2D2/Build-environment/modules/BLUETOOTH/src/main.cpp" "/home/laurens/Documents/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/arduino-template.elf.dir/src/main.cpp.obj"
+  "/home/laurens/Documents/R2D2/Build-environment/modules/BLUETOOTH/src/wrap-hwlib.cpp" "/home/laurens/Documents/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/arduino-template.elf.dir/src/wrap-hwlib.cpp.obj"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

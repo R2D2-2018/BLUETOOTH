@@ -1,24 +1,24 @@
 Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
-Compiler: C:/Program Files (x86)/GNU Tools ARM Embedded/7 2017-q4-major/bin/arm-none-eabi-g++.exe 
+Compiler: /usr/bin/arm-none-eabi-g++ 
 Build flags: 
 Id flags:  
 
 The output was:
 1
-c:/program files (x86)/gnu tools arm embedded/7 2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib\libc.a(lib_a-exit.o): In function `exit':
-exit.c:(.text.exit+0x2c): undefined reference to `_exit'
-collect2.exe: error: ld returned 1 exit status
+/usr/lib/gcc/arm-none-eabi/6.3.1/../../../arm-none-eabi/lib/libc.a(lib_a-exit.o): In function `exit':
+/build/newlib-8gJlYR/newlib-2.4.0.20160527/build/arm-none-eabi/newlib/libc/stdlib/../../../../../newlib/libc/stdlib/exit.c:70: undefined reference to `_exit'
+collect2: error: ld returned 1 exit status
 
 
 Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
-Compiler: C:/Program Files (x86)/GNU Tools ARM Embedded/7 2017-q4-major/bin/arm-none-eabi-gcc.exe 
+Compiler: /usr/bin/arm-none-eabi-gcc 
 Build flags: 
 Id flags:  
 
 The output was:
 1
-c:/program files (x86)/gnu tools arm embedded/7 2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib\libc.a(lib_a-exit.o): In function `exit':
-exit.c:(.text.exit+0x2c): undefined reference to `_exit'
-collect2.exe: error: ld returned 1 exit status
+/usr/lib/gcc/arm-none-eabi/6.3.1/../../../arm-none-eabi/lib/libc.a(lib_a-exit.o): In function `exit':
+/build/newlib-8gJlYR/newlib-2.4.0.20160527/build/arm-none-eabi/newlib/libc/stdlib/../../../../../newlib/libc/stdlib/exit.c:70: undefined reference to `_exit'
+collect2: error: ld returned 1 exit status
 
 
