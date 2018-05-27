@@ -26,8 +26,9 @@
         {
             "name": "Linux",
             "includePath": [
-                "~/Documents/MRB/Build-environment/toolchain/targets/arm32/cm3/deps",
-                "~/Documents/MRB/Build-environment/toolchain/targets/arm32/cm3/atmel/sam3x/deps",
+                "~/Documents/R2D2/Build-environment/libraries/Catch2/include",
+                "~/Documents/R2D2/Build-environment/toolchain/targets/arm32/cm3/deps",
+                "~/Documents/R2D2/Build-environment/toolchain/targets/arm32/cm3/atmel/sam3x/deps",
                 "~/Documents/R2D2/Build-environment/libraries/hwlib/library",
                 "/usr/include",
                 "/usr/local/include",
