@@ -58,6 +58,10 @@ void HC06::setBaud(const unsigned int & baud){
     hwlib::cout << "Set baud rate to: " << baud << '\n';
 }
 
+unsigned int HC06::getBaud() {
+    return currentBaudrate;
+}
+
 void HC06::setName(const std::string & newName){
     name = newName;
     // uart-comm stuff to send new name (max 20 chars)

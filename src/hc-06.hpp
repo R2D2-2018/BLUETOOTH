@@ -16,17 +16,16 @@
 #ifndef HC06_H
 #define HC06_H
 
-#include "bluetooth.hpp"
 #include "wrap-hwlib.hpp"
 #include <string>
 #include "bluetooth.hpp"
 
 /// \brief
 /// HC-06 bluetooth library
-    std::string name; /// Used for storing the name of this device.
 class HC06 : public Bluetooth{
 private:
     uint8_t discoveredDevices[32]; /// Used for storing the connection id of a discovered device.
+    std::string name;              /// Used for storing the name of this device.
     unsigned int currentBaudrate;
 public:
     HC06();
@@ -110,6 +109,15 @@ public:
      * @return void
      */
     void setBaud(const unsigned int & baud);
+
+    /**
+     * @brief Used to get the current baudrate of this device.
+     * [BLANK]
+     * [BLANK]
+     * This function will return the current baudrate used.
+     * @return string with the name.
+     */
+    unsigned int getBaud();
 
     /**
      * @brief Used to set the name of the chip. This is not an ID
