@@ -1,11 +1,11 @@
-#ifndef BLUETOOTH
-#define BLUETOOTH
+#ifndef BLUETOOTH_H
+#define BLUETOOTH_H
 
 #include "wrap-hwlib.hpp"
 
 class bluetooth {
-public:
-     /// \brief
+  public:
+    /// \brief
     /// Used to connect to other devices
     /// \details
     /// Connect to the specified device ID. To get the device ID use function "search".
@@ -17,7 +17,7 @@ public:
 
     /// \brief
     /// Used to read the name of this device.
-    virtual uint8_t* getName() = 0;
+    virtual uint8_t *getName() = 0;
 
     /// \brief
     /// Used to read the status of the HC-06 chip.
@@ -28,7 +28,7 @@ public:
     /// \details
     /// Pair with the specified device ID. To get the device ID use function "search".
     virtual void pair(int deviceID) = 0;
-    
+
     /// \brief
     /// Used to retrieve the message.
     /// \details
@@ -39,7 +39,7 @@ public:
     /// Used to discover any discoverable devices.
     /// \details
     /// This function will return a device id for all discovered devices. Use this ID to connect.
-    virtual uint8_t* search() = 0;
+    virtual uint8_t *search() = 0;
 
     /// \brief
     /// Used to send data to other devices.
