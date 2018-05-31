@@ -13,7 +13,7 @@ TEST_CASE( "HC06 name functions" ) {
 TEST_CASE( "HC06 baud functions" ) {
     HC06 test;
     unsigned int newBaud = 11520;
-    test.setBaud(newBaudb);
+    test.setBaud(newBaud);
     REQUIRE( newBaud == test.getBaud());
 }
 
