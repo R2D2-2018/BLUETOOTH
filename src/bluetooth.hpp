@@ -3,7 +3,7 @@
 
 #include "wrap-hwlib.hpp"
 
-class bluetooth {
+class Bluetooth {
   public:
     /**
      * @brief Used to connect to other devices.
