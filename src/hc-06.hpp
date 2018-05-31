@@ -101,10 +101,6 @@ class HC06 : public bluetooth {
      */
     void send(uint8_t *data);
 
-    /// \brief
-    /// Used to set the baud rate of the connection.
-    /// @param[in] baud rate
-
     /**
      * @brief Used to set the baud rate of the connection.
      * @param[in]     baud    An integer specifying the baud rate.
