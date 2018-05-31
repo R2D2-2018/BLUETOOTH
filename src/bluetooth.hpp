@@ -41,6 +41,15 @@ class bluetooth {
     virtual int getStatus() = 0;
 
     /**
+     * @brief Used to get the current baudrate of this device.
+     * [BLANK]
+     * [BLANK]
+     * This function will return the current baudrate used.
+     * @return string with the name.
+     */
+    virtual unsigned int getBaud() = 0;
+
+    /**
      * @brief Used to pair with other devices.
      * [BLANK]
      * Pair with the specified device ID. To get the device ID use function "search".
