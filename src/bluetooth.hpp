@@ -5,58 +5,98 @@
 
 class bluetooth {
   public:
-    /// \brief
-    /// Used to connect to other devices
-    /// \details
-    /// Connect to the specified device ID. To get the device ID use function "search".
+    /**
+     * @brief Used to connect to other devices.
+     * [BLANK]
+     * Connect to the specified device ID. To get the device ID use function "search".
+     * [BLANK]
+     * @param[in]     deviceID    An unique ID of a device.
+     * @return void
+     */
     virtual void connect(int deviceID) = 0;
 
-    /// \brief
-    /// Used to disconnect form a device.
+    /**
+     * @brief Used to disconnect from other devices.
+     * @return void
+     */
     virtual void disconnect() = 0;
 
-    /// \brief
-    /// Used to read the name of this device.
+    /**
+     * @brief Used to read the name of this device.
+     * [BLANK]
+     * This function will read the current device name and return an array with characters.
+     * [BLANK]
+     * @return uint8_t array with the name.
+     */
     virtual uint8_t *getName() = 0;
 
-    /// \brief
-    /// Used to read the status of the HC-06 chip.
+    /**
+     * @brief Used to read the status of the HC-06 chip.
+     * [BLANK]
+     * This function will check if the chip is detected and functional by performing a simple communication test.
+     * [BLANK]
+     * @return Int of current status.
+     */
     virtual int getStatus() = 0;
 
-    /// \brief
-    /// Used to pair with other devices.
-    /// \details
-    /// Pair with the specified device ID. To get the device ID use function "search".
+    /**
+     * @brief Used to pair with other devices.
+     * [BLANK]
+     * Pair with the specified device ID. To get the device ID use function "search".
+     * [BLANK]
+     * @param[in]     deviceID    An unique ID of a device.
+     * @return void
+     */
     virtual void pair(int deviceID) = 0;
 
-    /// \brief
-    /// Used to retrieve the message.
-    /// \details
-    /// Provide this function with own data buffer. The buffer will hold the received message.
+    /**
+     * @brief Used to retrieve the message.
+     * [BLANK]
+     * Provide this function with own data buffer. The buffer will hold the received message.
+     * [BLANK]
+     * @param[in]     deviceID    An unique ID of a device.
+     * @return void
+     */
     virtual void receive(uint8_t *data) = 0;
 
-    /// \brief
-    /// Used to discover any discoverable devices.
-    /// \details
-    /// This function will return a device id for all discovered devices. Use this ID to connect.
+    /**
+     * @brief Used to discover any discoverable devices.
+     * [BLANK]
+     * This function will return a device id for all discovered devices. Use this ID to connect.
+     * [BLANK]
+     * @return uint8_t pointer to an array of unique device ID's.
+     */
     virtual uint8_t *search() = 0;
 
-    /// \brief
-    /// Used to send data to other devices.
-    /// \details
-    /// This function will send the data provided.
+    /**
+     * @brief Used to send data to other devices.
+     * [BLANK]
+     * This function will send the data provided.
+     * [BLANK]
+     * @param[in]     data    A pointer to a uint8_t data array.
+     * @return void
+     */
     virtual void send(uint8_t *data) = 0;
 
-    /// \brief
-    /// Used to set the baud rate of the connection.
+    /**
+     * @brief Used to set the baud rate of the connection.
+     * @param[in]     baud    An integer specifying the baud rate.
+     * @return void
+     */
     virtual void setBaud(int baud) = 0;
 
-    /// \brief
-    /// Used to set the name of the chip.
+    /**
+     * @brief Used to set the name of the chip. This is not an ID
+     * @param[in]     name    A pointer to an uint8_t data array holding the name.
+     * @return void
+     */
     virtual void setName(const uint8_t *name) = 0;
 
-    /// \brief
-    /// choose whether the chip will be discoverable or not.
+    /**
+     * @brief choose whether the chip will be discoverable or not.
+     * @param[in]     visible    An boolean to set the visibility.
+     * @return void
+     */
     virtual void setVisibility(bool visible) = 0;
 };
 
