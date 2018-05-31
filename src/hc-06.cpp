@@ -25,7 +25,7 @@ void HC06::disconnect(){
     hwlib::cout << "Disconnect\n";
 }
 
-uint8_t* HC06::getName(){
+std::string HC06::getName(){
     hwlib::cout << "Get name\n";
     return name;
 }
@@ -52,12 +52,15 @@ void HC06::send(uint8_t *data){
     hwlib::cout << "Sending data\n";
 }
 
-void HC06::setBaud(int baud){
+void HC06::setBaud(const unsigned int & baud){
+    currentBaudrate = baud;
+    // uart-comm stuff to send new baud rate
     hwlib::cout << "Set baud rate to: " << baud << '\n';
 }
 
-void HC06::setName(const uint8_t *name){
-    hwlib::cout << "Set name\n";
+void HC06::setName(const std::string & newName){
+    name = newName;
+    // uart-comm stuff to send new name (max 20 chars)
 }
 
 void HC06::setVisibility(bool visible){

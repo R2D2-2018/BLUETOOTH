@@ -2,8 +2,9 @@
 #define BLUETOOTH
 
 #include "wrap-hwlib.hpp"
+#include <string>
 
-class bluetooth {
+class Bluetooth {
 public:
      /// \brief
     /// Used to connect to other devices
@@ -17,7 +18,7 @@ public:
 
     /// \brief
     /// Used to read the name of this device.
-    virtual uint8_t* getName() = 0;
+    virtual std::string getName() = 0;
 
     /// \brief
     /// Used to read the status of the HC-06 chip.
@@ -49,11 +50,11 @@ public:
 
     /// \brief
     /// Used to set the baud rate of the connection.
-    virtual void setBaud(int baud) = 0;
+    virtual void setBaud(unsigned int & baud) = 0;
 
     /// \brief
     /// Used to set the name of the chip.
-    virtual void setName(const uint8_t *name) = 0;
+    virtual void setName(const std::string & newName) = 0;
 
     /// \brief
     /// choose whether the chip will be discoverable or not.

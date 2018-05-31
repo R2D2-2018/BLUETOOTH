@@ -19,13 +19,15 @@
 
 #include "wrap-hwlib.hpp"
 #include "bluetooth.hpp"
+#include <string>
 
 /// \brief
 /// HC-06 bluetooth library
-class HC06 : public bluetooth{
+class HC06 : public Bluetooth{
 private:
-    uint8_t name[32]; /// Used for storing the name of this device.
+    std::string name; /// Used for storing the name of this device.
     uint8_t discoveredDevices[32]; /// Used for storing the connection id of a discovered device.
+    unsigned int currentBaudrate;
 public:
     HC06();
 
@@ -41,7 +43,7 @@ public:
 
     /// \brief
     /// Used to read the name of this device.
-    uint8_t* getName();
+    std::string getName();
 
     /// \brief
     /// Used to read the status of the HC-06 chip.
@@ -73,11 +75,11 @@ public:
 
     /// \brief
     /// Used to set the baud rate of the connection.
-    void setBaud(int baud);
+    void setBaud(const unsigned int & baud);
 
     /// \brief
     /// Used to set the name of the chip.
-    void setName(const uint8_t *name);
+    void setName(const std::string & newName);
 
     /// \brief
     /// choose whether the chip will be discoverable or not.
