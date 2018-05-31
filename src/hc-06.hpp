@@ -18,6 +18,7 @@
 
 #include "bluetooth.hpp"
 #include "wrap-hwlib.hpp"
+#include <string>
 
 /// \brief
 /// HC-06 bluetooth library
@@ -25,6 +26,9 @@ class HC06 : public Bluetooth {
   private:
     uint8_t name[32];              /// Used for storing the name of this device.
     uint8_t discoveredDevices[32]; /// Used for storing the connection id of a discovered device.
+    std::string name;              /// Used for storing the name of this device.
+    unsigned int currentBaudrate;
+
   public:
     HC06();
 
@@ -47,11 +51,11 @@ class HC06 : public Bluetooth {
     /**
      * @brief Used to read the name of this device.
      * [BLANK]
-     * This function will read the current device name and return an array with characters.
      * [BLANK]
-     * @return uint8_t array with the name.
+     * This function will read the current device name and return a string.
+     * @return string with the name.
      */
-    uint8_t *getName();
+    std::string getName();
 
     /**
      * @brief Used to read the status of the HC-06 chip.
@@ -106,14 +110,23 @@ class HC06 : public Bluetooth {
      * @param[in]     baud    An integer specifying the baud rate.
      * @return void
      */
-    void setBaud(int baud);
+    void setBaud(const unsigned int &baud);
+
+    /**
+     * @brief Used to get the current baudrate of this device.
+     * [BLANK]
+     * [BLANK]
+     * This function will return the current baudrate used.
+     * @return string with the name.
+     */
+    unsigned int getBaud();
 
     /**
      * @brief Used to set the name of the chip. This is not an ID
-     * @param[in]     name    A pointer to an uint8_t data array holding the name.
+     * @param[in]     name    A reference to a string holding the name.
      * @return void
      */
-    void setName(const uint8_t *name);
+    void setName(const std::string &newName);
 
     /**
      * @brief choose whether the chip will be discoverable or not.

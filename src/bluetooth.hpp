@@ -2,6 +2,7 @@
 #define BLUETOOTH_H
 
 #include "wrap-hwlib.hpp"
+#include <string>
 
 class Bluetooth {
   public:
@@ -26,9 +27,9 @@ class Bluetooth {
      * [BLANK]
      * This function will read the current device name and return an array with characters.
      * [BLANK]
-     * @return uint8_t array with the name.
+     * @return string with the name.
      */
-    virtual uint8_t *getName() = 0;
+    virtual std::string getName() = 0;
 
     /**
      * @brief Used to read the status of the HC-06 chip.
@@ -38,6 +39,15 @@ class Bluetooth {
      * @return Int of current status.
      */
     virtual int getStatus() = 0;
+
+    /**
+     * @brief Used to get the current baudrate of this device.
+     * [BLANK]
+     * [BLANK]
+     * This function will return the current baudrate used.
+     * @return string with the name.
+     */
+    virtual unsigned int getBaud() = 0;
 
     /**
      * @brief Used to pair with other devices.
@@ -83,14 +93,14 @@ class Bluetooth {
      * @param[in]     baud    An integer specifying the baud rate.
      * @return void
      */
-    virtual void setBaud(int baud) = 0;
+    virtual void setBaud(unsigned int & baud) = 0;
 
     /**
      * @brief Used to set the name of the chip. This is not an ID
-     * @param[in]     name    A pointer to an uint8_t data array holding the name.
+     * @param[in]     name    A reference to the string containing the new name.
      * @return void
      */
-    virtual void setName(const uint8_t *name) = 0;
+    virtual void setName(const std::string & newName) = 0;
 
     /**
      * @brief choose whether the chip will be discoverable or not.
