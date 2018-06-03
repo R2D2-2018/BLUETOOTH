@@ -6,6 +6,9 @@
 
 class Bluetooth {
   public:
+    Bluetooth() {
+    }
+
     /**
      * @brief Used to connect to other devices.
      * [BLANK]
@@ -93,14 +96,14 @@ class Bluetooth {
      * @param[in]     baud    An integer specifying the baud rate.
      * @return void
      */
-    virtual void setBaud(unsigned int & baud) = 0;
+    virtual void setBaud(unsigned int &baud) = 0;
 
     /**
      * @brief Used to set the name of the chip. This is not an ID
      * @param[in]     name    A reference to the string containing the new name.
      * @return void
      */
-    virtual void setName(const std::string & newName) = 0;
+    virtual void setName(const std::string &newName) = 0;
 
     /**
      * @brief choose whether the chip will be discoverable or not.
