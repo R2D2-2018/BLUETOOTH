@@ -13,87 +13,126 @@
  * @file hc-06.hpp
  */
 
-
 #ifndef HC06_H
 #define HC06_H
 
-#include "wrap-hwlib.hpp"
 #include "bluetooth.hpp"
+#include "wrap-hwlib.hpp"
+#include <string>
 
 /// \brief
 /// HC-06 bluetooth library
-class HC06 : public bluetooth{
-private:
-    uint8_t name[32]; /// Used for storing the name of this device.
+class HC06 : public Bluetooth {
+  private:
     uint8_t discoveredDevices[32]; /// Used for storing the connection id of a discovered device.
-public:
+    std::string name;              /// Used for storing the name of this device.
+    unsigned int currentBaudrate;
+
+  public:
     HC06();
 
-    /// \brief
-    /// Used to connect to other devices
-    /// \details
-    /// Connect to the specified device ID. To get the device ID use function "search".
-    /// @param[in] device ID
+    /**
+     * @brief Used to connect to other devices.
+     * [BLANK]
+     * Connect to the specified device ID. To get the device ID use function "search".
+     * [BLANK]
+     * @param[in]     deviceID    An unique ID of a device.
+     * @return void
+     */
     void connect(int deviceID);
 
-    /// \brief
-    /// Used to disconnect form a device.
+    /**
+     * @brief Used to disconnect from other devices.
+     * @return void
+     */
     void disconnect();
 
-    /// \brief
-    /// Used to read the name of this device.
-    /// @return current device name
-    uint8_t* getName();
+    /**
+     * @brief Used to read the name of this device.
+     * [BLANK]
+     * [BLANK]
+     * This function will read the current device name and return a string.
+     * @return string with the name.
+     */
+    std::string getName();
 
-    /// \brief
-    /// Used to read the status of the HC-06 chip.
-    /// @return Int of current status
+    /**
+     * @brief Used to read the status of the HC-06 chip.
+     * [BLANK]
+     * This function will check if the chip is detected and functional by performing a simple communication test.
+     * [BLANK]
+     * @return Int of current status.
+     */
     int getStatus();
 
-    /// \brief
-    /// Used to pair with other devices.
-    /// \details
-    /// Pair with the specified device ID. To get the device ID use function "search".
-    /// @param[in] device ID
-
+    /**
+     * @brief Used to pair with other devices.
+     * [BLANK]
+     * Pair with the specified device ID. To get the device ID use function "search".
+     * [BLANK]
+     * @param[in]     deviceID    An unique ID of a device.
+     * @return void
+     */
     void pair(int deviceID);
-    
-    /// \brief
-    /// Used to retrieve the message.
-    /// \details
-    /// Provide this function with own data buffer. The buffer will hold the received message.
-    /// @param[in] Data
+
+    /**
+     * @brief Used to retrieve the message.
+     * [BLANK]
+     * Provide this function with own data buffer. The buffer will hold the received message.
+     * [BLANK]
+     * @param[in]     deviceID    An unique ID of a device.
+     * @return void
+     */
     void receive(uint8_t *data);
 
-    /// \brief
-    /// Used to discover any discoverable devices.
-    /// \details
-    /// This function will return a device id for all discovered devices. Use this ID to connect.
-    /// @return discovered device IDs
-    uint8_t* search();
+    /**
+     * @brief Used to discover any discoverable devices.
+     * [BLANK]
+     * This function will return a device id for all discovered devices. Use this ID to connect.
+     * [BLANK]
+     * @return uint8_t pointer to an array of unique device ID's.
+     */
+    uint8_t *search();
 
-    /// \brief
-    /// Used to send data to other devices.
-    /// \details
-    /// This function will send the data provided.
-    /// @param[in] Data
+    /**
+     * @brief Used to send data to other devices.
+     * [BLANK]
+     * This function will send the data provided.
+     * [BLANK]
+     * @param[in]     data    A pointer to a uint8_t data array.
+     * @return void
+     */
     void send(uint8_t *data);
 
-    /// \brief
-    /// Used to set the baud rate of the connection.
-    /// @param[in] baud rate
-    void setBaud(int baud);
+    /**
+     * @brief Used to set the baud rate of the connection.
+     * @param[in]     baud    An integer specifying the baud rate.
+     * @return void
+     */
+    void setBaud(const unsigned int &baud);
 
-    /// \brief
-    /// Used to set the name of the chip. This is not an ID
-    /// @param[in] name of the bluetooth module
-    void setName(const uint8_t *name);
+    /**
+     * @brief Used to get the current baudrate of this device.
+     * [BLANK]
+     * [BLANK]
+     * This function will return the current baudrate used.
+     * @return string with the name.
+     */
+    unsigned int getBaud();
 
-    /// \brief
-    /// choose whether the chip will be discoverable or not.
-    /// @param[in] bool true or false
+    /**
+     * @brief Used to set the name of the chip. This is not an ID
+     * @param[in]     name    A reference to a string holding the name.
+     * @return void
+     */
+    void setName(const std::string &newName);
+
+    /**
+     * @brief choose whether the chip will be discoverable or not.
+     * @param[in]     visible    An boolean to set the visibility.
+     * @return void
+     */
     void setVisibility(bool visible);
-
 };
 
 #endif
