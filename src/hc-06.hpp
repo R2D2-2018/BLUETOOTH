@@ -24,7 +24,6 @@
 /// HC-06 bluetooth library
 class HC06 : public Bluetooth {
   private:
-    uint8_t name[32];              /// Used for storing the name of this device.
     uint8_t discoveredDevices[32]; /// Used for storing the connection id of a discovered device.
     std::string name;              /// Used for storing the name of this device.
     unsigned int currentBaudrate;
