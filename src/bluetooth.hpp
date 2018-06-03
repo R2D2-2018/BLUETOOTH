@@ -9,6 +9,8 @@ class Bluetooth {
     Bluetooth() {
     }
 
+    virtual ~Bluetooth() {
+    }
     /**
      * @brief Used to connect to other devices.
      * [BLANK]
@@ -50,16 +52,7 @@ class Bluetooth {
      * This function will return the current baudrate used.
      * @return string with the name.
      */
-    virtual unsigned int getBaud() = 0;
 
-    /**
-     * @brief Used to pair with other devices.
-     * [BLANK]
-     * Pair with the specified device ID. To get the device ID use function "search".
-     * [BLANK]
-     * @param[in]     deviceID    An unique ID of a device.
-     * @return void
-     */
     virtual void pair(int deviceID) = 0;
 
     /**
@@ -96,11 +89,21 @@ class Bluetooth {
      * @param[in]     baud    An integer specifying the baud rate.
      * @return void
      */
-    virtual void setBaud(unsigned int &baud) = 0;
+    virtual void setBaud(const unsigned int &baud) = 0;
 
     /**
      * @brief Used to set the name of the chip. This is not an ID
      * @param[in]     name    A reference to the string containing the new name.
+     * @return void
+     */
+    virtual unsigned int getBaud() = 0;
+
+    /**
+     * @brief Used to pair with other devices.
+     * [BLANK]
+     * Pair with the specified device ID. To get the device ID use function "search".
+     * [BLANK]
+     * @param[in]     deviceID    An unique ID of a device.
      * @return void
      */
     virtual void setName(const std::string &newName) = 0;
