@@ -5,6 +5,10 @@
             "includePath": [
                 "/usr/include",
                 "/usr/local/include",
+                "${R2D2_BUILD_ENVIRONMENT}/libraries/hwlib/library",
+                "${R2D2_BUILD_ENVIRONMENT}/libraries/Catch2/include",
+                "${R2D2_BUILD_ENVIRONMENT}/toolchain/targets/arm32/cm3/atmel/sam3x/deps",
+                "${R2D2_BUILD_ENVIRONMENT}/toolchain/targets/arm32/cm3/deps",
                 "${workspaceFolder}"
             ],
             "defines": [],
@@ -26,12 +30,12 @@
         {
             "name": "Linux",
             "includePath": [
-                "~/Documents/R2D2/Build-environment/libraries/Catch2/include",
-                "~/Documents/R2D2/Build-environment/toolchain/targets/arm32/cm3/deps",
-                "~/Documents/R2D2/Build-environment/toolchain/targets/arm32/cm3/atmel/sam3x/deps",
-                "~/Documents/R2D2/Build-environment/libraries/hwlib/library",
                 "/usr/include",
                 "/usr/local/include",
+                "${R2D2_BUILD_ENVIRONMENT}/libraries/hwlib/library",
+                "${R2D2_BUILD_ENVIRONMENT}/libraries/Catch2/include",
+                "${R2D2_BUILD_ENVIRONMENT}/toolchain/targets/arm32/cm3/atmel/sam3x/deps",
+                "${R2D2_BUILD_ENVIRONMENT}/toolchain/targets/arm32/cm3/deps",
                 "${workspaceFolder}"
             ],
             "defines": [
@@ -42,7 +46,6 @@
             "intelliSenseMode": "clang-x64",
             "browse": {
                 "path": [
-                    "~/Documents/R2D2/Build-environment/libraries/hwlib/library",
                     "/usr/include",
                     "/usr/local/include",
                     "${workspaceFolder}"
@@ -55,7 +58,10 @@
             "name": "Win32",
             "includePath": [
                 "${workspaceFolder}",
-                "C:/ti-software/hwlib/library",
+                "${R2D2_BUILD_ENVIRONMENT}/libraries/hwlib/library",
+                "${R2D2_BUILD_ENVIRONMENT}/libraries/Catch2/include",
+                "${R2D2_BUILD_ENVIRONMENT}/toolchain/targets/arm32/cm3/atmel/sam3x/deps",
+                "${R2D2_BUILD_ENVIRONMENT}/toolchain/targets/arm32/cm3/deps",
                 "C:/Program Files/mingw-w64/mingw64/lib/gcc/x86_64-w64-mingw32/6.3.0",
                 "C:/Program Files/mingw-w64/mingw64/lib/gcc/x86_64-w64-mingw32/.3.0//nclude//c++",
                 "C:/Program Files/mingw-w64/mingw64/lib/gcc/x86_64-w64-mingw32/6.3.0/include/c++/x86_64-w64-mingw32",
@@ -71,7 +77,10 @@
             "browse": {
                 "path": [
                     "${workspaceFolder}",
-                    "C:/ti-software/hwlib/library",
+                    "${R2D2_BUILD_ENVIRONMENT}/libraries/hwlib/library",
+                    "${R2D2_BUILD_ENVIRONMENT}/libraries/Catch2/include",
+                    "${R2D2_BUILD_ENVIRONMENT}/toolchain/targets/arm32/cm3/atmel/sam3x/deps",
+                    "${R2D2_BUILD_ENVIRONMENT}/toolchain/targets/arm32/cm3/deps",
                     "C:/Program Files/mingw-w64/mingw64/lib/gcc/x86_64-w64-mingw32/6.3.0",
                     "C:/Program Files/mingw-w64/mingw64/lib/gcc/x86_64-w64-mingw32/.3.0//nclude//c++",
                     "C:/Program Files/mingw-w64/mingw64/lib/gcc/x86_64-w64-mingw32/6.3.0/include/c++/x86_64-w64-mingw32",

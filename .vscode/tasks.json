@@ -6,21 +6,21 @@
         {
             "label": "build",
             "type": "shell",
-            "command": "make -C ./build",
+            "command": "cmake --build ./build",
             "group": "build",
             "problemMatcher": []
         },
         {
             "label": "run",
             "type": "shell",
-            "command": "mode COM3:1200; make flash -C ./build; putty -serial COM3 -sercfg 8,1,19200;",
+            "command": "cmake --build ./build --target flash && putty -serial COM3 -sercfg 8,1,19200;",
             "group": "none",
             "problemMatcher": []
         },
         {
             "label": "clean",
             "type": "shell",
-            "command": "make clean -C ./build",
+            "command": "cmake --build ./build --target clean",
             "group": "none",
             "problemMatcher": []
         }
