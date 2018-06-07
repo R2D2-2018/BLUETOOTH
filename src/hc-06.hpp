@@ -3,6 +3,7 @@
  * @author HU R2D2 2018
  * @date 13/05/2018
  * @file hc-06.hpp
+ * @license see LICENSE
  */
 
 #ifndef HC06_H
@@ -14,8 +15,8 @@
 
 class HC06 : public Bluetooth {
   private:
-    uint8_t discoveredDevices[32]; /// Used for storing the connection id of a discovered device.
-    std::string name;              /// Used for storing the name of this device.
+    uint8_t discoveredDevices[32]; ///< Used for storing the connection id of a discovered device.
+    std::string name;              ///< Used for storing the name of this device.
     unsigned int currentBaudrate;
 
   public:
