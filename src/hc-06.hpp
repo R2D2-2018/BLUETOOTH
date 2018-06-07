@@ -1,8 +1,7 @@
 /**
- * @class HC06
- * @author HU R2D2 2018
- * @date 13/05/2018
  * @file hc-06.hpp
+ * @brief control the hc06 bluetooth module
+ * @author HU R2D2 2018
  * @license see LICENSE
  */
 
