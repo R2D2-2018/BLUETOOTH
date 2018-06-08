@@ -1,17 +1,3 @@
-// ==========================================================================
-//
-// File      : hc-06.cpp
-// Part of   : C++ library for using the hc-06 bluetooth module.
-//
-// ==========================================================================
-
-// this file contains Doxygen lines
-/**
- * @author HU R2D2 2018
- * @date 13/05/2018
- * @file hc-06.cpp
- */
-
 #include "hc-06.hpp"
 
 HC06::HC06() {
