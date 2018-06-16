@@ -1,6 +1,32 @@
 #include "hc-06.hpp"
 
-HC06::HC06() {
+HC06::HC06() : connection(9600, UARTController::ONE) {
+}
+
+bool HC06::testConnection() {
+
+    char data[] = "  ";
+    const char message[] = "OK";
+
+    // Set command
+    connection << "AT";
+
+    // Wait for response, timeout at 10 us
+    auto start = hwlib::now_us();
+    while (connection.available() < 2 || hwlib::now_us() - start < 10) {
+        // hwlib::cout << connection.available();
+    }
+    for (unsigned int i = 0; i <= connection.available(); i++) {
+        data[i] = connection.receive();
+    }
+
+    for (int i = 0; i < 2; ++i) {
+        if (data[i] != message[i]) {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 void HC06::connect(int deviceID) {
@@ -12,7 +38,6 @@ void HC06::disconnect() {
 }
 
 hwlib::string<50> HC06::getName() {
-    hwlib::cout << "Get name\n";
     return name;
 }
 

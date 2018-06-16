@@ -8,17 +8,20 @@
 #ifndef HC06_H
 #define HC06_H
 
+#include "UART_LIB/uart_connection.hpp"
 #include "bluetooth.hpp"
 #include "wrap-hwlib.hpp"
-#include <string>
 
 class HC06 : public Bluetooth {
   private:
     uint8_t discoveredDevices[32]; ///< Used for storing the connection id of a discovered device.
     unsigned int currentBaudrate;
+    UARTConnection connection;
 
   public:
     HC06();
+
+    bool testConnection();
 
     /**
      * @brief Used to connect to other devices.
