@@ -15,7 +15,6 @@
 class HC06 : public Bluetooth {
   private:
     uint8_t discoveredDevices[32]; ///< Used for storing the connection id of a discovered device.
-    std::string name;              ///< Used for storing the name of this device.
     unsigned int currentBaudrate;
 
   public:
@@ -42,7 +41,7 @@ class HC06 : public Bluetooth {
      *
      * @return string with the name.
      */
-    std::string getName();
+    hwlib::string<50> getName();
 
     /**
      * @brief Used to read the status of the HC-06 chip.
@@ -110,7 +109,7 @@ class HC06 : public Bluetooth {
      *
      * @param[in]     name    A reference to a string holding the name.
      */
-    void setName(const std::string &newName);
+    void setName(const hwlib::string<50> &newName);
 
     /**
      * @brief choose whether the chip will be discoverable or not.

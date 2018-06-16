@@ -1,11 +1,10 @@
 #define CATCH_CONFIG_MAIN // This tells Catch to provide a main() - only do this in one cpp file
 #include "../src/hc-06.hpp"
 #include "catch.hpp"
-#include <string>
 
 TEST_CASE("HC06 name functions") {
     HC06 test;
-    std::string newName = "Test naam";
+    hwlib::string<50> newName = "Test naam";
     test.setName(newName);
     REQUIRE(newName == test.getName());
 }

@@ -11,7 +11,7 @@ void HC06::disconnect() {
     hwlib::cout << "Disconnect\n";
 }
 
-std::string HC06::getName() {
+hwlib::string<50> HC06::getName() {
     hwlib::cout << "Get name\n";
     return name;
 }
@@ -48,7 +48,7 @@ unsigned int HC06::getBaud() {
     return currentBaudrate;
 }
 
-void HC06::setName(const std::string &newName) {
+void HC06::setName(const hwlib::string<50> &newName) {
     name = newName;
     // uart-comm stuff to send new name (max 20 chars)
 }
