@@ -1,4 +1,4 @@
-.*/
-build/
-build_test
 CMakeLists.txt
+build/*
+build_test/*
+.vscode/*
