@@ -1,6 +1,0 @@
-C:/ti-software/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/arduino-template.bin.dir
-C:/ti-software/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/arduino-template.elf.dir
-C:/ti-software/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/arduino-template.hex.dir
-C:/ti-software/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/flash.dir
-C:/ti-software/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/edit_cache.dir
-C:/ti-software/R2D2/Build-environment/modules/BLUETOOTH/build/CMakeFiles/rebuild_cache.dir
