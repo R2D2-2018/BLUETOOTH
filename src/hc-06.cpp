@@ -67,14 +67,20 @@ void HC06::send(uint8_t *data) {
     hwlib::cout << "Sending data\n";
 }
 
-void HC06::setBaud(const unsigned int &baud) {
-    currentBaudrate = baud;
-    // uart-comm stuff to send new baud rate
-    hwlib::cout << "Set baud rate to: " << baud << '\n';
+uint32_t HC06::getBaud() {
+    return BaudRateValues[static_cast<uint32_t>(baudrate)];
 }
 
-unsigned int HC06::getBaud() {
-    return currentBaudrate;
+bool HC06::setBaud(BaudRates baud) {
+    // Send command to UC06
+    bool wasSuccessful = sendCommand<maxNameSize>(CommandTypes::baud, BaudRateStrings[static_cast<int>(baud)]);
+
+    // Change name if it was successful
+    if (wasSuccessful) {
+        baudrate = baud;
+    }
+
+    return wasSuccessful;
 }
 
 void HC06::setVisibility(bool visible) {

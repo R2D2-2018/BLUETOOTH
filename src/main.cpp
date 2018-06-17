@@ -19,6 +19,12 @@ int main() {
         hwlib::cout << "Could not set pin" << hwlib::endl;
     }
 
+    if (bluetooth.setBaud(HC06::BaudRates::FOUR)) {
+        hwlib::cout << "Set baudrate to: " << bluetooth.getBaud() << hwlib::endl;
+    } else {
+        hwlib::cout << "Could not set baudrate" << hwlib::endl;
+    }
+
     while (true) {
         hwlib::cout << bluetooth.getName() << ": " << ((bluetooth.testConnection()) ? "Connected" : "Not connected") << hwlib::endl;
     }

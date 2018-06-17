@@ -13,16 +13,35 @@
 #include <array>
 
 class HC06 {
+  public:
+    enum class BaudRates {
+        ONE = 0,
+        TWO,
+        THREE,
+        FOUR, // DEFAULT
+        FIVE,
+        SIX,
+        SEVEN,
+        EIGHT,
+        NINE,
+        A,
+        B,
+        C
+    };
+
   private:
     static constexpr const uint8_t maxNameSize = 50;
     static constexpr const uint8_t pinSize = 4;
 
-    enum class CommandTypes { test = 0, name, pin }; ///< Used by sendCommand to create a commandString
-    const std::array<hwlib::string<maxNameSize>, 3> commands = {"AT", "AT+NAME", "AT+PIN"};
-    const std::array<hwlib::string<maxNameSize>, 3> responses = {"OK", "OKsetname", "OKsetpin"};
-    static constexpr const std::array<size_t, 3> responseSizes = {2, 9, 8};
+    enum class CommandTypes { test = 0, name, pin, baud }; ///< Used by sendCommand to create a commandString
+
+    const std::array<uint32_t, 12> BaudRateValues = {1200,  2400,   4800,   9600,   19200,  38400,
+                                                     57600, 115200, 230400, 460800, 921600, 1382400};
+    const std::array<hwlib::string<1>, 12> BaudRateStrings = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C"};
+    const std::array<hwlib::string<maxNameSize>, 4> commands = {"AT", "AT+NAME", "AT+PIN", "AT+BAUD"};
+    const std::array<hwlib::string<maxNameSize>, 4> responses = {"OK", "OKsetname", "OKsetpin", "OKsetbaud"};
     uint8_t discoveredDevices[32]; ///< Used for storing the connection id of a discovered device.
-    unsigned int currentBaudrate;
+    BaudRates baudrate = BaudRates::FOUR;
 
     UARTConnection connection;
     hwlib::string<maxNameSize> name; ///< Used for storing the name of this device.
@@ -175,19 +194,17 @@ class HC06 {
     void send(uint8_t *data);
 
     /**
+     * @brief Used to get the current baudrate of this device.
+     *
+     * This function will return the current baudrate used.
+     */
+    uint32_t getBaud();
+
+    /**
      * @brief Used to set the baud rate of the connection.
      * @param[in]     baud    An integer specifying the baud rate.
      */
-    void setBaud(const unsigned int &baud);
-
-    /**
-     * @brief Used to get the current baudrate of this device.
-     *
-     *
-     * This function will return the current baudrate used.
-     * @return string with the name.
-     */
-    unsigned int getBaud();
+    bool setBaud(BaudRates baud);
 
     /**
      * @brief choose whether the chip will be discoverable or not.
