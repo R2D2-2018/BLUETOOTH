@@ -4,7 +4,6 @@ HC06::HC06() : connection(9600, UARTController::ONE) {
 }
 
 bool HC06::testConnection() {
-
     const hwlib::string<2> message = "OK";
 
     // Set command
@@ -27,9 +26,24 @@ hwlib::string<50> HC06::getName() {
     return name;
 }
 
-int HC06::getStatus() {
-    hwlib::cout << "Get status\n";
-    return 0;
+bool HC06::setName(const hwlib::string<maxNameSize> &newName) {
+    const hwlib::string<2> message = "OK";
+    // Name + AT+NAME
+    hwlib::string<maxNameSize + 7> command = "AT+NAME";
+    command += newName;
+
+    // Set command
+    connection << command;
+
+    // Get response
+    auto data = receive<2>();
+    bool wasSuccessful = compareString<2>(data, message);
+
+    if (wasSuccessful) {
+        name = newName;
+    }
+
+    return wasSuccessful;
 }
 
 void HC06::pair(int deviceID) {
@@ -53,11 +67,6 @@ void HC06::setBaud(const unsigned int &baud) {
 
 unsigned int HC06::getBaud() {
     return currentBaudrate;
-}
-
-void HC06::setName(const hwlib::string<50> &newName) {
-    name = newName;
-    // uart-comm stuff to send new name (max 20 chars)
 }
 
 void HC06::setVisibility(bool visible) {

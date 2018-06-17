@@ -14,13 +14,14 @@
 
 class HC06 {
   private:
+    static constexpr const uint8_t maxNameSize = 50;
     uint8_t discoveredDevices[32]; ///< Used for storing the connection id of a discovered device.
     unsigned int currentBaudrate;
     UARTConnection connection;
-    hwlib::string<50> name; ///< Used for storing the name of this device.
+    hwlib::string<maxNameSize> name; ///< Used for storing the name of this device.
   private:
     template <size_t size>
-    bool compareString(hwlib::string<size> string1, hwlib::string<size> string2) {
+    bool compareString(const hwlib::string<size> &string1, const hwlib::string<size> &string2) {
         for (size_t i = 0; i < size; ++i) {
             if (string1[i] != string2[i]) {
                 return false;
@@ -56,7 +57,7 @@ class HC06 {
      *
      * @return string with the name.
      */
-    hwlib::string<50> getName();
+    hwlib::string<maxNameSize> getName();
 
     /**
      * @brief Used to read the status of the HC-06 chip.
@@ -140,7 +141,7 @@ class HC06 {
      *
      * @param[in]     name    A reference to a string holding the name.
      */
-    void setName(const hwlib::string<50> &newName);
+    bool setName(const hwlib::string<50> &newName);
 
     /**
      * @brief choose whether the chip will be discoverable or not.

@@ -7,7 +7,11 @@ int main() {
     hwlib::wait_ms(1000);
     HC06 bluetooth;
 
-    bluetooth.setName("R2D2-B1");
+    if (bluetooth.setName("R2D2-B1")) {
+        hwlib::cout << "Renamed module" << hwlib::endl;
+    } else {
+        hwlib::cout << "Could not rename module" << hwlib::endl;
+    }
 
     while (true) {
         hwlib::cout << bluetooth.getName() << ": " << ((bluetooth.testConnection()) ? "Connected" : "Not connected") << hwlib::endl;
