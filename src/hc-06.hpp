@@ -9,15 +9,15 @@
 #define HC06_H
 
 #include "UART_LIB/uart_connection.hpp"
-#include "bluetooth.hpp"
 #include "wrap-hwlib.hpp"
 #include <array>
 
-class HC06 : public Bluetooth {
+class HC06 {
   private:
     uint8_t discoveredDevices[32]; ///< Used for storing the connection id of a discovered device.
     unsigned int currentBaudrate;
     UARTConnection connection;
+    hwlib::string<50> name; ///< Used for storing the name of this device.
 
   public:
     HC06();
