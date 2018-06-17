@@ -11,6 +11,7 @@
 #include "UART_LIB/uart_connection.hpp"
 #include "bluetooth.hpp"
 #include "wrap-hwlib.hpp"
+#include <array>
 
 class HC06 : public Bluetooth {
   private:

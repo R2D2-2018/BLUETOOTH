@@ -5,8 +5,8 @@ HC06::HC06() : connection(9600, UARTController::ONE) {
 
 bool HC06::testConnection() {
 
-    char data[] = "  ";
-    const char message[] = "OK";
+    std::array<char, 2> data;
+    const std::array<char, 2> message = {'O', 'K'};
 
     // Set command
     connection << "AT";
