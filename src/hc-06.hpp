@@ -14,7 +14,7 @@
 
 class HC06 {
   public:
-    enum class BaudRates {
+    enum class BaudRates { ///< Used by the setBaud method to set the baudrates
         ONE = 0,
         TWO,
         THREE,
@@ -30,23 +30,36 @@ class HC06 {
     };
 
   private:
+    ///< Used for UART connection
+    UARTConnection connection;
+
+    ///< Used by get and set name for hwlib::string
     static constexpr const uint8_t maxNameSize = 50;
+    ///< Used by get and set pin for hwlib::string
     static constexpr const uint8_t pinSize = 4;
+    ///< Used by sendCommand to create a commandString
+    enum class CommandTypes { test = 0, name, pin, baud };
 
-    enum class CommandTypes { test = 0, name, pin, baud }; ///< Used by sendCommand to create a commandString
-
+    ///< Used to convert BaudRates to value
     const std::array<uint32_t, 12> BaudRateValues = {1200,  2400,   4800,   9600,   19200,  38400,
                                                      57600, 115200, 230400, 460800, 921600, 1382400};
+    ///< Used to convert BaudRates to string
     const std::array<hwlib::string<1>, 12> BaudRateStrings = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C"};
+    ///< Used by sendCommand method to send commands to UC06 device
     const std::array<hwlib::string<maxNameSize>, 4> commands = {"AT", "AT+NAME", "AT+PIN", "AT+BAUD"};
+    ///< Used by sendCommand method to validate response
     const std::array<hwlib::string<maxNameSize>, 4> responses = {"OK", "OKsetname", "OKsetpin", "OKsetbaud"};
-    uint8_t discoveredDevices[32]; ///< Used for storing the connection id of a discovered device.
-    BaudRates baudrate = BaudRates::FOUR;
 
-    UARTConnection connection;
-    hwlib::string<maxNameSize> name; ///< Used for storing the name of this device.
-    hwlib::string<pinSize> pincode;  ///< Used for storing a local version of the 4 digit pincode saved as a byte
+    uint8_t discoveredDevices[32];        ///< Used for storing the connection id of a discovered device.
+    BaudRates baudrate = BaudRates::FOUR; ///< Used for the baudrate
+    hwlib::string<maxNameSize> name;      ///< Used for storing the name of this device.
+    hwlib::string<pinSize> pincode;       ///< Used for storing a local version of the 4 digit pincode saved as a byte
   private:
+    /*
+     * @brief compares to hwlib::strings
+     *
+     * @return True if equal, false if not
+     */
     template <size_t size>
     bool compareString(const hwlib::string<size> &string1, const hwlib::string<size> &string2) {
         for (size_t i = 0; i < size; ++i) {
@@ -58,6 +71,17 @@ class HC06 {
         return true;
     }
 
+    /*
+     * @brief Sends command to device using UART
+     *
+     * Uses the commandType to create a command with the given data, then sends it
+     * The uses the reveive method to check for response of the decive and checks if the command was successfully set
+     *
+     * @tparam     size          Size of the data string
+     * @param      commandType   The command type of the command that needs to be send
+     * @param      data          The data that needs to be send
+     * @return If the command was successfully received at the device
+     */
     template <size_t size>
     bool sendCommand(CommandTypes commandType, hwlib::string<size> data) {
         const auto &expectedResponseMessage = responses[static_cast<int>(commandType)];
@@ -80,6 +104,13 @@ class HC06 {
   public:
     HC06();
 
+    /*
+     * @brief Tests if there is a connection with the device
+     *
+     * Sends the "AT" command and checks if the device responds with "OK"
+     *
+     * @return True if there is a connection, else false
+     */
     bool testConnection();
 
     /**
