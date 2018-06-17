@@ -22,7 +22,7 @@ void HC06::disconnect() {
     hwlib::cout << "Disconnect\n";
 }
 
-hwlib::string<50> HC06::getName() {
+hwlib::string<HC06::maxNameSize> HC06::getName() {
     return name;
 }
 
@@ -33,6 +33,22 @@ bool HC06::setName(const hwlib::string<maxNameSize> &newName) {
     // Change name if it was successful
     if (wasSuccessful) {
         name = newName;
+    }
+
+    return wasSuccessful;
+}
+
+hwlib::string<HC06::pinSize> HC06::getPincode() {
+    return pincode;
+}
+
+bool HC06::setPincode(hwlib::string<pinSize> newPincode) {
+    // Send command to UC06
+    bool wasSuccessful = sendCommand<maxNameSize>(CommandTypes::pin, newPincode);
+
+    // Change name if it was successful
+    if (wasSuccessful) {
+        pincode = newPincode;
     }
 
     return wasSuccessful;

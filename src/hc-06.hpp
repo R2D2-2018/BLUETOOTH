@@ -15,14 +15,18 @@
 class HC06 {
   private:
     static constexpr const uint8_t maxNameSize = 50;
-    enum class CommandTypes { test = 0, name }; ///< Used by sendCommand to create a commandString
-    const std::array<hwlib::string<maxNameSize>, 2> commands = {"AT", "AT+NAME"};
+    static constexpr const uint8_t pinSize = 4;
+
+    enum class CommandTypes { test = 0, name, pin }; ///< Used by sendCommand to create a commandString
+    const std::array<hwlib::string<maxNameSize>, 3> commands = {"AT", "AT+NAME", "AT+PIN"};
+    const std::array<hwlib::string<maxNameSize>, 3> responses = {"OK", "OKsetname", "OKsetpin"};
+    static constexpr const std::array<size_t, 3> responseSizes = {2, 9, 8};
     uint8_t discoveredDevices[32]; ///< Used for storing the connection id of a discovered device.
     unsigned int currentBaudrate;
 
     UARTConnection connection;
     hwlib::string<maxNameSize> name; ///< Used for storing the name of this device.
-    uint8_t pinCode;                 ///< Used for storing a local version of the pinCode
+    hwlib::string<pinSize> pincode;  ///< Used for storing a local version of the 4 digit pincode saved as a byte
   private:
     template <size_t size>
     bool compareString(const hwlib::string<size> &string1, const hwlib::string<size> &string2) {
@@ -37,7 +41,7 @@ class HC06 {
 
     template <size_t size>
     bool sendCommand(CommandTypes commandType, hwlib::string<size> data) {
-        static const hwlib::string<2> expectedResponseMessage("OK");
+        const auto &expectedResponseMessage = responses[static_cast<int>(commandType)];
         // Create command
         auto command = commands[static_cast<int>(commandType)];
         command += data;
@@ -46,6 +50,8 @@ class HC06 {
         connection << command;
 
         // Get response
+        // TODO: Try to get length to work, currently gives the value of 'expectedResponseMessage' is not usable in a constant
+        // expression auto result = receive<expectedResponseMessage.length()>();
         auto result = receive<2>();
 
         // Check if respose is as expected
@@ -88,6 +94,25 @@ class HC06 {
     bool setName(const hwlib::string<50> &newName);
 
     /**
+     * @brief Used to get the pin code of the device
+     *
+     * This function will return thecurrent device pincode.
+     * The pincode is 4 digit and saved as a hwlib::string
+     *
+     * @return The pincode
+     */
+    hwlib::string<pinSize> getPincode();
+
+    /**
+     * @brief Used to set the pincode of the device.
+     *
+     * The pincode is 4 digit and saved as a hwlib::string
+     *
+     * @param[in]     newPincode    The new pincode
+     */
+    bool setPincode(hwlib::string<pinSize> newPincode);
+
+    /**
      * @brief Used to pair with other devices.
      *
      * Pair with the specified device ID. To get the device ID use function "search".
@@ -115,8 +140,17 @@ class HC06 {
         while (connection.available() < size && hwlib::now_us() - start < timeOut) {
             // hwlib::cout << connection.available();
         }
-        for (unsigned int i = 0; i <= connection.available(); i++) {
+
+        // Write data to string
+        for (unsigned int i = 0; i < size; i++) {
             result[i] = connection.receive();
+        }
+
+        // Clear uart buffer
+        while (hwlib::now_us() - start < timeOut) {
+        }
+        for (size_t i = 0; i < connection.available(); ++i) {
+            connection.receive();
         }
 
         return result;
