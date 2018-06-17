@@ -27,18 +27,10 @@ hwlib::string<50> HC06::getName() {
 }
 
 bool HC06::setName(const hwlib::string<maxNameSize> &newName) {
-    const hwlib::string<2> message = "OK";
-    // Name + AT+NAME
-    hwlib::string<maxNameSize + 7> command = "AT+NAME";
-    command += newName;
+    // Send command to UC06
+    bool wasSuccessful = sendCommand<maxNameSize>(CommandTypes::name, newName);
 
-    // Set command
-    connection << command;
-
-    // Get response
-    auto data = receive<2>();
-    bool wasSuccessful = compareString<2>(data, message);
-
+    // Change name if it was successful
     if (wasSuccessful) {
         name = newName;
     }

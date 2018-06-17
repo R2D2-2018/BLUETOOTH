@@ -15,10 +15,14 @@
 class HC06 {
   private:
     static constexpr const uint8_t maxNameSize = 50;
+    enum class CommandTypes { test = 0, name }; ///< Used by sendCommand to create a commandString
+    const std::array<hwlib::string<maxNameSize>, 2> commands = {"AT", "AT+NAME"};
     uint8_t discoveredDevices[32]; ///< Used for storing the connection id of a discovered device.
     unsigned int currentBaudrate;
+
     UARTConnection connection;
     hwlib::string<maxNameSize> name; ///< Used for storing the name of this device.
+    uint8_t pinCode;                 ///< Used for storing a local version of the pinCode
   private:
     template <size_t size>
     bool compareString(const hwlib::string<size> &string1, const hwlib::string<size> &string2) {
@@ -29,6 +33,23 @@ class HC06 {
         }
 
         return true;
+    }
+
+    template <size_t size>
+    bool sendCommand(CommandTypes commandType, hwlib::string<size> data) {
+        static const hwlib::string<2> expectedResponseMessage("OK");
+        // Create command
+        auto command = commands[static_cast<int>(commandType)];
+        command += data;
+
+        // Send command
+        connection << command;
+
+        // Get response
+        auto result = receive<2>();
+
+        // Check if respose is as expected
+        return compareString<2>(result, expectedResponseMessage);
     }
 
   public:
@@ -60,13 +81,11 @@ class HC06 {
     hwlib::string<maxNameSize> getName();
 
     /**
-     * @brief Used to read the status of the HC-06 chip.
+     * @brief Used to set the name of the chip. This is not an ID
      *
-     * This function will check if the chip is detected and functional by performing a simple communication test.
-     *
-     * @return Int of current status.
+     * @param[in]     name    A reference to a string holding the name.
      */
-    int getStatus();
+    bool setName(const hwlib::string<50> &newName);
 
     /**
      * @brief Used to pair with other devices.
@@ -135,13 +154,6 @@ class HC06 {
      * @return string with the name.
      */
     unsigned int getBaud();
-
-    /**
-     * @brief Used to set the name of the chip. This is not an ID
-     *
-     * @param[in]     name    A reference to a string holding the name.
-     */
-    bool setName(const hwlib::string<50> &newName);
 
     /**
      * @brief choose whether the chip will be discoverable or not.
