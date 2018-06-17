@@ -18,6 +18,17 @@ class HC06 {
     unsigned int currentBaudrate;
     UARTConnection connection;
     hwlib::string<50> name; ///< Used for storing the name of this device.
+  private:
+    template <size_t size>
+    bool compareString(hwlib::string<size> string1, hwlib::string<size> string2) {
+        for (size_t i = 0; i < size; ++i) {
+            if (string1[i] != string2[i]) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 
   public:
     HC06();
@@ -66,14 +77,30 @@ class HC06 {
     void pair(int deviceID);
 
     /**
-     * @brief Used to retrieve the message.
+     * @brief Used the uart connection to receive a message
      *
-     * Provide this function with own data buffer. The buffer will hold the received message.
+     * This function waits until the uart available is the size of the message or when it timesOut.
+     * Then it creates a hwlib::string and filles it with the message and returns it.
      *
-     * @param[in]     deviceID    An unique ID of a device.
-     *
+     * @tparam        size        The size of result string
+     * @param[in]     timeOut     Number of us before the function times out
+     * @return The hwlib::string with the reveived data
      */
-    void receive(uint8_t *data);
+    template <int size>
+    hwlib::string<size> receive(uint_fast64_t timeOut = 1'000'000) {
+        hwlib::string<size> result;
+
+        // Wait for response, timeout at when it takes to long
+        auto start = hwlib::now_us();
+        while (connection.available() < size && hwlib::now_us() - start < timeOut) {
+            // hwlib::cout << connection.available();
+        }
+        for (unsigned int i = 0; i <= connection.available(); i++) {
+            result[i] = connection.receive();
+        }
+
+        return result;
+    }
 
     /**
      * @brief Used to discover any discoverable devices.

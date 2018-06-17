@@ -5,28 +5,14 @@ HC06::HC06() : connection(9600, UARTController::ONE) {
 
 bool HC06::testConnection() {
 
-    std::array<char, 2> data;
-    const std::array<char, 2> message = {'O', 'K'};
+    const hwlib::string<2> message = "OK";
 
     // Set command
     connection << "AT";
 
-    // Wait for response, timeout at 10 us
-    auto start = hwlib::now_us();
-    while (connection.available() < 2 || hwlib::now_us() - start < 10) {
-        // hwlib::cout << connection.available();
-    }
-    for (unsigned int i = 0; i <= connection.available(); i++) {
-        data[i] = connection.receive();
-    }
+    auto data = receive<2>();
 
-    for (int i = 0; i < 2; ++i) {
-        if (data[i] != message[i]) {
-            return false;
-        }
-    }
-
-    return true;
+    return compareString<2>(data, message);
 }
 
 void HC06::connect(int deviceID) {
@@ -48,10 +34,6 @@ int HC06::getStatus() {
 
 void HC06::pair(int deviceID) {
     hwlib::cout << "Pair with device: " << deviceID << '\n';
-}
-
-void HC06::receive(uint8_t *data) {
-    hwlib::cout << "Receive data\n";
 }
 
 uint8_t *HC06::search() {
