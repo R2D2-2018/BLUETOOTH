@@ -1,4 +1,7 @@
-CMakeLists.txt
-build/*
-build_test/*
-.vscode/*
+build/
+test_build/
+.vscode/
+CMakeFiles/
+Makefile
+build_test/
+cmake_install.cmake

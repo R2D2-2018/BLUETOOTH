@@ -20,6 +20,10 @@ set (memcheck memcheck)
 set (complexity_test complexity_test)
 set (clangformat_test clangformat_test)
 
+add_definitions (-DBMPTK_TARGET_test
+                 -DBMPTK_TARGET=test
+                 -DBMPTK_BAUDRATE=19200)
+
 if (NOT DEFINED cyclomatic_complexity_warning)
 SET(cyclomatic_complexity_warning 10)
 endif (NOT DEFINED cyclomatic_complexity_warning)
