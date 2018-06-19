@@ -1,7 +1,7 @@
 /**
  * @file hc-06.hpp
  * @brief control the hc06 bluetooth module
- * @author HU R2D2 2018
+ * @author Stein Bout, Laurens van der Sluis, Nick Bout
  * @license see LICENSE
  */
 
