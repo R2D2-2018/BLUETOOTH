@@ -26,6 +26,12 @@ int main() {
         hwlib::cout << "Could not set baudrate" << hwlib::endl;
     }
 
+    if (bluetooth.setParityCheckMode(HC06::ParityModes::NONE)) {
+        hwlib::cout << "Set parityMode to " << static_cast<int>(bluetooth.getParityCheckMode()) << hwlib::endl;
+    } else {
+        hwlib::cout << "Could not set parity" << hwlib::endl;
+    }
+
     while (true) {
         hwlib::cout << bluetooth.getName() << ": " << ((bluetooth.testConnection()) ? "Connected" : "Not connected") << hwlib::endl;
     }
