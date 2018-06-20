@@ -11,5 +11,5 @@ include_directories (${catch}/single_include)
 # Source Files:
 
 set (sources
-src/hc-06.cpp
+    src/hc-06.cpp
 )
