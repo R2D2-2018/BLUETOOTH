@@ -43,8 +43,8 @@ class HC06 {
     enum class CommandTypes { test = 0, name, pin, baud };
 
     ///< Used to convert BaudRates to value
-    const std::array<uint32_t, 12> BaudRateValues = {1200,  2400,   4800,   9600,   19200,  38400,
-                                                     57600, 115200, 230400, 460800, 921600, 1382400};
+    const std::array<uint32_t, 12> BaudRateValues = {
+        {1200, 2400, 4800, 9600, 19200, 38400, 57600, 115200, 230400, 460800, 921600, 1382400}};
     ///< Used to convert BaudRates to string
     const std::array<hwlib::string<baudrateSize>, 12> BaudRateStrings = {
         {"1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C"}};
