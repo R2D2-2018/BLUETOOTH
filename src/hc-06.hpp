@@ -63,7 +63,7 @@ class HC06 {
      *
      * Removes 0's before the first non zero value
      *
-     * @param The number that needs to be converted
+     * @param       number       The number that needs to be converted
      * @return The number in string format
      */
     hwlib::string<0> uint32_tToString(uint32_t number) {
@@ -99,6 +99,7 @@ class HC06 {
     /*
      * @brief compares to hwlib::strings
      *
+     * @tparam      size      The size of the strings
      * @return True if equal, false if not
      */
     template <size_t size>
@@ -119,6 +120,7 @@ class HC06 {
      * The uses the reveive method to check for response of the decive and checks if the command was successfully set
      *
      * @tparam     size          Size of the data string
+     * @tparam     responseSize  Size of the response string
      * @param      commandType   The command type of the command that needs to be send
      * @param      data          The data that needs to be send
      * @return If the command was successfully received at the device
@@ -185,7 +187,7 @@ class HC06 {
     /**
      * @brief Used to set the name of the chip. This is not an ID
      *
-     * @param[in]     name    A reference to a string holding the name.
+     * @param[in]     newName    A reference to a string holding the name.
      */
     bool setName(const hwlib::string<50> &newName);
 
