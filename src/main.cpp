@@ -5,7 +5,8 @@
 int main() {
     WDT->WDT_MR = WDT_MR_WDDIS;
     hwlib::wait_ms(1000);
-    HC06 bluetooth;
+    UARTConnection connection(9600, UARTController::ONE);
+    HC06 bluetooth(connection);
 
     if (bluetooth.setName("R2D2-B1")) {
         hwlib::cout << "Renamed module" << hwlib::endl;

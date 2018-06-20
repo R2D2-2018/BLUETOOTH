@@ -8,7 +8,7 @@
 #ifndef HC06_H
 #define HC06_H
 
-#include "UART_LIB/uart_connection.hpp"
+#include "UART_LIB/io_stream.hpp"
 #include "wrap-hwlib.hpp"
 #include <array>
 
@@ -31,7 +31,7 @@ class HC06 {
 
   private:
     ///< Used for UART connection
-    UARTConnection connection;
+    IOStream &connection;
 
     ///< Used by get and set name for hwlib::string
     static constexpr const uint8_t maxNameSize = 50;
@@ -104,7 +104,6 @@ class HC06 {
     template <size_t size>
     bool compareString(const hwlib::string<size> &string1, const hwlib::string<size> &string2) {
         for (size_t i = 0; i < size; ++i) {
-            hwlib::cout << string1[i] << ", " << string2[i] << hwlib::endl;
             if (string1[i] != string2[i]) {
                 return false;
             }
@@ -149,7 +148,7 @@ class HC06 {
     }
 
   public:
-    HC06();
+    explicit HC06(IOStream &connection);
 
     /*
      * @brief Tests if there is a connection with the device
@@ -234,23 +233,23 @@ class HC06 {
 
         // Wait for response, timeout at when it takes to long
         auto start = hwlib::now_us();
-        while (connection.available() < size && hwlib::now_us() - start < timeOut) {
-            // hwlib::cout << connection.available();
+        while (connection.count_available() < size && hwlib::now_us() - start < timeOut) {
+            // hwlib::cout << connection.char_available();
         }
 
         // Write data to string
         for (unsigned int i = 0; i < size; i++) {
-            if (connection.available()) {
-                result[i] = connection.receive();
-                // hwlib::cout << connection.receive() << hwlib::endl;
+            if (connection.count_available()) {
+                result[i] = connection.getc();
+                // hwlib::cout << connection.getc() << hwlib::endl;
             }
         }
 
         // Clear uart buffer
         while (hwlib::now_us() - start < timeOut) {
         }
-        for (size_t i = 0; i < connection.available(); ++i) {
-            connection.receive();
+        for (size_t i = 0; i < connection.count_available(); ++i) {
+            connection.getc();
         }
 
         return result;

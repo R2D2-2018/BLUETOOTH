@@ -181,3 +181,19 @@ inline void UARTConnection::disable() {
     /// Set the control register to reset and disable the receiver and transmitter.
     hardwareUSART->US_CR = UART_CR_RSTRX | UART_CR_RSTTX | UART_CR_RXDIS | UART_CR_TXDIS;
 }
+
+void UARTConnection::putc(char c) {
+    send(c);
+}
+
+void UARTConnection::puts(const char *str) {
+    send(str);
+}
+
+unsigned int UARTConnection::count_available() {
+    return available() > 0;
+}
+
+char UARTConnection::getc() {
+    return receive();
+}

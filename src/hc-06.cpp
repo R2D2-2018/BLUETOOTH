@@ -1,6 +1,6 @@
 #include "hc-06.hpp"
 
-HC06::HC06() : connection(9600, UARTController::ONE) {
+HC06::HC06(IOStream &connection) : connection(connection) {
 }
 
 bool HC06::testConnection() {

@@ -1,3 +1,5 @@
+#include <cstddef>
+
 /**
  * @file
  * @brief     FIFO Queue.
@@ -11,19 +13,21 @@
 #ifndef QUEUE_HPP
 #define QUEUE_HPP
 
-#include <stdlib.h>
+#include <cstddef>
 
 template <class T, size_t QUEUE_SIZE>
 class Queue {
   private:
     unsigned int _front, _back, _count;
     T _data[QUEUE_SIZE];
-
+    // int QUEUE_SIZE;
   public:
     Queue() {
         _front = 0;
         _back = 0;
         _count = 0;
+        // QUEUE_SIZE = maxitems;
+        //_data = new T[maxitems + 1];
     }
     inline int count();
     inline int front();

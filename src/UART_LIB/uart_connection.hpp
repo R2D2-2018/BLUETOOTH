@@ -9,6 +9,7 @@
 #define UART_COMM_HPP
 
 #include "../wrap-hwlib.hpp"
+#include "io_stream.hpp"
 #include "queue.hpp"
 
 /**
@@ -25,7 +26,7 @@ enum class UARTController { ONE, TWO, THREE };
  * @brief Establishes an serial/UART connection using on of the three dedicated serial controllers located on the Arduino Due.
  *
  */
-class UARTConnection {
+class UARTConnection : public IOStream {
   public:
     /**
      * @brief Construct a new UARTConnection object.
@@ -195,6 +196,34 @@ class UARTConnection {
      * @return char
      */
     inline char receiveByte();
+
+    /**
+     * @brief Send a char.
+     *
+     * @param[in] c The char that need to be send.
+     */
+    void putc(char c) override;
+
+    /**
+     * @brief Send a string.
+     *
+     * @param[in] str String (must be null terminated).
+     */
+    void puts(const char *str) override;
+
+    /*
+     * @brief Returns how much characters there are available
+     *
+     * @return The number of available characters
+     */
+    unsigned int count_available() override;
+
+    /*
+     * @brief Returns reveived Byte
+     *
+     * @return the byte
+     */
+    char getc() override;
 };
 
 #endif
