@@ -46,12 +46,12 @@ class HC06 {
     const std::array<uint32_t, 12> BaudRateValues = {1200,  2400,   4800,   9600,   19200,  38400,
                                                      57600, 115200, 230400, 460800, 921600, 1382400};
     ///< Used to convert BaudRates to string
-    const std::array<hwlib::string<baudrateSize>, 12> BaudRateStrings = {"1", "2", "3", "4", "5", "6",
-                                                                         "7", "8", "9", "A", "B", "C"};
+    const std::array<hwlib::string<baudrateSize>, 12> BaudRateStrings = {
+        {"1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C"}};
     ///< Used by sendCommand method to send commands to UC06 device
-    const std::array<hwlib::string<maxNameSize>, 4> commands = {"AT", "AT+NAME", "AT+PIN", "AT+BAUD"};
+    const std::array<hwlib::string<maxNameSize>, 4> commands = {{"AT", "AT+NAME", "AT+PIN", "AT+BAUD"}};
     ///< Used by sendCommand method to validate response
-    const std::array<hwlib::string<maxNameSize>, 4> responses = {"OK", "OKsetname", "OKsetPIN", "OK"};
+    const std::array<hwlib::string<maxNameSize>, 4> responses = {{"OK", "OKsetname", "OKsetPIN", "OK"}};
 
     uint8_t discoveredDevices[32];        ///< Used for storing the connection id of a discovered device.
     BaudRates baudrate = BaudRates::FOUR; ///< Used for the baudrate
