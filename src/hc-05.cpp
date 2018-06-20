@@ -60,8 +60,8 @@ void HC05::pair(int deviceID) {
     hwlib::cout << "Pair with device: " << deviceID << '\n';
 }
 
-void HC05::send(const char *data) {
-    connection << data;
+void HC05::send(hwlib::string<maxMessageSize> msg) {
+    connection << msg;
 }
 
 uint32_t HC05::getBaud() {

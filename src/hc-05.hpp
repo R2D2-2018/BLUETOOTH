@@ -187,7 +187,7 @@ class HC05 {
      *
      * @param[in]     data    A pointer to a uint8_t data array.
      */
-    void send(const char *data);
+    void send(hwlib::string<maxMessageSize> msg);
 
     /**
      * @brief Used to get the current baudrate of this device.

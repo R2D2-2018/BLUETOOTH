@@ -12,4 +12,5 @@ include_directories (${catch}/single_include)
 
 set (sources
     src/hc-06.cpp
+    src/hc-05.cpp
 )
