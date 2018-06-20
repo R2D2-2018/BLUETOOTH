@@ -114,7 +114,7 @@ class HC06 {
     bool compareString(const hwlib::string<size> &string1, const hwlib::string<size> &string2) {
         for (size_t i = 0; i < size; ++i) {
             if (string1[i] != string2[i]) {
-                // return false;
+                return false;
             }
         }
 
@@ -258,7 +258,7 @@ class HC06 {
         // Clear uart buffer
         start = hwlib::now_us();
         while (hwlib::now_us() - start < timeOut) {
-            // connection.getc();
+            connection.getc(); // Without this the compiler will remove the loop
             // hwlib::cout << "Test" << hwlib::endl;
         }
         for (size_t i = 0; i < connection.count_available(); ++i) {
