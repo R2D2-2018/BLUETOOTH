@@ -91,3 +91,16 @@ void HC05::setMode(int master) {
 int HC05::getMode() {
     return mode;
 }
+
+hwlib::string<HC05::maxMessageSize> HC05::receiveData() {
+    auto data = receive<HC05::maxMessageSize>();
+    return data;
+}
+
+int HC05::checkDataLength(hwlib::string<HC05::maxMessageSize> data) {
+    int size = 0;
+    while (data[size] != 255) {
+        size++;
+    }
+    return size;
+}

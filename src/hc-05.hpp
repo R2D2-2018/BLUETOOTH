@@ -205,6 +205,10 @@ class HC05 {
     void setMode(int master);
 
     int getMode();
+
+    hwlib::string<maxMessageSize> receiveData();
+
+    int checkDataLength(hwlib::string<HC05::maxMessageSize> data);
 };
 
 #endif
