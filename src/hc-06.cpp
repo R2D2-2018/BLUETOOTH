@@ -102,3 +102,24 @@ bool HC06::setBaud(BaudRates baud) {
 void HC06::setVisibility(bool visible) {
     hwlib::cout << "Set visibility\n";
 }
+
+HC06::ParityModes HC06::getParityCheckMode() {
+    return parityMode;
+}
+
+bool HC06::setParityCheckMode(ParityModes newParityMode) {
+    // Get the length of the expected response message
+    // We cannot use the responses array because hwlib::string has no constexpr constructor (yet) and therefore cannot make the
+    // array constexpr, if we could we could use:
+    // static constexpr const auto &length = responses[static_cast<int>(CommandTypes::parity)].length();
+    static constexpr const auto length = 2; // "OK" length
+    // Send command to UC06
+    bool wasSuccessful = sendCommand<parityModeSize, length>(CommandTypes::parity, parityStrings[static_cast<int>(newParityMode)]);
+
+    // Change name if it was successful
+    if (wasSuccessful) {
+        parityMode = newParityMode;
+    }
+
+    return wasSuccessful;
+}

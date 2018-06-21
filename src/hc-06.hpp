@@ -14,7 +14,7 @@
 
 class HC06 {
   public:
-    enum class BaudRates { ///< Used by the setBaud method to set the baudrates
+    enum class BaudRates { ///< Used by the setBaud method to set the baudrates, default = FOUR
         ONE = 0,
         TWO,
         THREE,
@@ -28,6 +28,8 @@ class HC06 {
         B,
         C
     };
+    ///< Used by the parityMode to set parity, default = NONE
+    enum class ParityModes { NONE = 0, ODD, EVEN };
 
   private:
     ///< Used for UART connection
@@ -39,8 +41,10 @@ class HC06 {
     static constexpr const uint8_t pinSize = 4;
     ///< Used by get and set pin for hwlib::string
     static constexpr const uint8_t baudrateSize = 1;
+    ///< Used by get and set pin for hwlib::string
+    static constexpr const uint8_t parityModeSize = 4;
     ///< Used by sendCommand to create a commandString
-    enum class CommandTypes { test = 0, name, pin, baud };
+    enum class CommandTypes { test = 0, name, pin, baud, parity };
 
     ///< Used to convert BaudRates to value
     const std::array<uint32_t, 12> BaudRateValues = {
@@ -48,15 +52,19 @@ class HC06 {
     ///< Used to convert BaudRates to string
     const std::array<hwlib::string<baudrateSize>, 12> BaudRateStrings = {
         {"1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C"}};
+    ///< Used to convert ParityModes to string
+    const std::array<hwlib::string<parityModeSize>, 3> parityStrings = {{"PN", "PO", "PE"}};
+    const std::array<hwlib::string<parityModeSize>, 3> parityResponseStrings = {{"NONE", "ODD", "EVEN"}};
     ///< Used by sendCommand method to send commands to UC06 device
-    const std::array<hwlib::string<maxNameSize>, 4> commands = {{"AT", "AT+NAME", "AT+PIN", "AT+BAUD"}};
+    const std::array<hwlib::string<maxNameSize>, 5> commands = {{"AT", "AT+NAME", "AT+PIN", "AT+BAUD", "AT+"}};
     ///< Used by sendCommand method to validate response
-    const std::array<hwlib::string<maxNameSize>, 4> responses = {{"OK", "OKsetname", "OKsetPIN", "OK"}};
+    const std::array<hwlib::string<maxNameSize>, 5> responses = {{"OK", "OKsetname", "OKsetPIN", "OK", "OK"}};
 
-    uint8_t discoveredDevices[32];        ///< Used for storing the connection id of a discovered device.
-    BaudRates baudrate = BaudRates::FOUR; ///< Used for the baudrate
-    hwlib::string<maxNameSize> name;      ///< Used for storing the name of this device.
-    hwlib::string<pinSize> pincode;       ///< Used for storing a local version of the 4 digit pincode saved as a byte
+    uint8_t discoveredDevices[32];              ///< Used for storing the connection id of a discovered device.
+    BaudRates baudrate = BaudRates::FOUR;       ///< Used for the baudrate
+    ParityModes parityMode = ParityModes::NONE; ///< Used for the parityMode
+    hwlib::string<maxNameSize> name;            ///< Used for storing the name of this device.
+    hwlib::string<pinSize> pincode;             ///< Used for storing a local version of the 4 digit pincode saved as a byte
   private:
     /*
      * @brief convert uint32_t to hwlib::string
@@ -234,7 +242,7 @@ class HC06 {
         hwlib::string<size> result;
 
         // Wait for response, timeout at when it takes to long
-        auto start = hwlib::now_us();
+        volatile auto start = hwlib::now_us();
         while (connection.count_available() < size && hwlib::now_us() - start < timeOut) {
             // hwlib::cout << connection.char_available();
         }
@@ -248,7 +256,10 @@ class HC06 {
         }
 
         // Clear uart buffer
+        start = hwlib::now_us();
         while (hwlib::now_us() - start < timeOut) {
+            connection.getc(); // Without this the compiler will remove the loop
+            // hwlib::cout << "Test" << hwlib::endl;
         }
         for (size_t i = 0; i < connection.count_available(); ++i) {
             connection.getc();
@@ -294,6 +305,19 @@ class HC06 {
      * @param[in]     visible    An boolean to set the visibility.
      */
     void setVisibility(bool visible);
+
+    /**
+     * @brief Used to get the parity check mode of the device.
+     *
+     * This function will return the current baudrate used.
+     */
+    ParityModes getParityCheckMode();
+
+    /**
+     * @brief Used to set the parity check mode of the device.
+     * @param[in]     newParityMode    That paritymode the device needs to take on.
+     */
+    bool setParityCheckMode(ParityModes newParityMode);
 };
 
 #endif
