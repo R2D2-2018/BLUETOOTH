@@ -27,8 +27,11 @@ int main() {
     // }
 
     while (true) {
-        bluetooth.send("msg");
-
+        auto data = bluetooth.getVersion();
+        for (int i = 0; i < bluetooth.checkDataLength(data); i++) {
+            hwlib::cout << data[i];
+        }
+        // bluetooth.testConnection();
         // hwlib::cout << bluetooth.getName() << ": " << ((bluetooth.testConnection()) ? "Connected" : "Not connected") <<
         // hwlib::endl;
     }

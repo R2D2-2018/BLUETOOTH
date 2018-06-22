@@ -1,6 +1,6 @@
 #include "hc-05.hpp"
 
-HC05::HC05() : connection(9600, UARTController::ONE) {
+HC05::HC05() : connection(38400, UARTController::ONE) {
     power.set(1);
     setMode(mode);
 }
@@ -9,10 +9,11 @@ bool HC05::testConnection() {
     const hwlib::string<2> message = "OK";
 
     // Set command
-    connection << "AT";
-
-    auto data = receive<2>();
-    hwlib::cout << data[0] << data[1];
+    connection << "AT\r\n";
+    auto data = receiveData();
+    for (int i = 0; i < checkDataLength(data); i++) {
+        hwlib::cout << data[i];
+    }
     return compareString<2>(data, message);
 }
 
@@ -103,4 +104,10 @@ int HC05::checkDataLength(hwlib::string<HC05::maxMessageSize> data) {
         size++;
     }
     return size;
+}
+
+hwlib::string<HC05::maxMessageSize> HC05::getVersion() {
+    connection << "AT+VERSION?\r\n";
+    auto data = receiveData();
+    return data;
 }

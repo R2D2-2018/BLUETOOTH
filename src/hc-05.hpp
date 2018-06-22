@@ -32,14 +32,15 @@ class HC05 {
   private:
     static constexpr const uint8_t maxNameSize = 50;
     static constexpr const uint8_t pinSize = 4;
-    static constexpr const uint8_t maxMessageSize = 20;
+    static constexpr const uint8_t maxMessageSize = 50;
 
     enum class CommandTypes { test = 0, name, pin, baud }; ///< Used by sendCommand to create a commandString
 
     const std::array<uint32_t, 12> BaudRateValues = {1200,  2400,   4800,   9600,   19200,  38400,
                                                      57600, 115200, 230400, 460800, 921600, 1382400};
-    const std::array<hwlib::string<1>, 12> BaudRateStrings = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C"};
-    const std::array<hwlib::string<maxNameSize>, 4> commands = {"AT", "AT+NAME", "AT+PIN", "AT+BAUD"};
+    const std::array<hwlib::string<1>, 12> BaudRateStrings = {"1\r\n", "2\r\n", "3\r\n", "4\r\n", "5\r\n", "6\r\n",
+                                                              "7\r\n", "8\r\n", "9\r\n", "A\r\n", "B\r\n", "C\r\n"};
+    const std::array<hwlib::string<maxNameSize>, 4> commands = {"AT\r\n", "AT+NAME", "AT+PIN", "AT+BAUD"};
     const std::array<hwlib::string<maxNameSize>, 4> responses = {"OK", "OKsetname", "OKsetpin", "OKsetbaud"};
     uint8_t discoveredDevices[32]; ///< Used for storing the connection id of a discovered device.
     BaudRates baudrate = BaudRates::SIX;
@@ -47,7 +48,7 @@ class HC05 {
     UARTConnection connection;
     hwlib::string<maxNameSize> name; ///< Used for storing the name of this device.
     hwlib::string<pinSize> pincode;  ///< Used for storing a local version of the 4 digit pincode saved as a byte
-    int mode = 0;
+    int mode = 1;
     hwlib::target::pin_out select = hwlib::target::pin_out(hwlib::target::pins::d22);
     hwlib::target::pin_out power = hwlib::target::pin_out(hwlib::target::pins::d24);
 
@@ -64,7 +65,7 @@ class HC05 {
     }
 
     template <size_t size>
-    bool sendCommand(CommandTypes commandType, hwlib::string<size> data) {
+    bool sendCommand(CommandTypes commandType, hwlib::string<size> data = "") {
         const auto &expectedResponseMessage = responses[static_cast<int>(commandType)];
         // Create command
         auto command = commands[static_cast<int>(commandType)];
@@ -209,6 +210,8 @@ class HC05 {
     hwlib::string<maxMessageSize> receiveData();
 
     int checkDataLength(hwlib::string<HC05::maxMessageSize> data);
+
+    hwlib::string<maxMessageSize> getVersion();
 };
 
 #endif
