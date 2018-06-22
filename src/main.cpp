@@ -15,7 +15,7 @@ int main() {
     }
 
     if (bluetooth.setPincode("1234")) {
-        hwlib::cout << "Set pincode to 1234" << hwlib::endl;
+        hwlib::cout << "Set pincode to " << bluetooth.getPincode() << hwlib::endl;
     } else {
         hwlib::cout << "Could not set pin" << hwlib::endl;
     }
