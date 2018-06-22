@@ -12,6 +12,8 @@
 #include "wrap-hwlib.hpp"
 #include <array>
 
+namespace Bluetooth {
+
 class HC06 {
   public:
     enum class BaudRates { ///< Used by the setBaud method to set the baudrates, default = FOUR
@@ -270,5 +272,7 @@ class HC06 {
      */
     bool setParityCheckMode(ParityModes newParityMode);
 };
+
+} // namespace Bluetooth
 
 #endif

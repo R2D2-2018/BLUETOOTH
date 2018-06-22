@@ -1,5 +1,7 @@
 #include "hc-06.hpp"
 
+namespace Bluetooth {
+
 HC06::HC06(IOStream &connection) : connection(connection) {
 }
 
@@ -98,3 +100,4 @@ bool HC06::setParityCheckMode(ParityModes newParityMode) {
 
     return wasSuccessful;
 }
+} // namespace Bluetooth
