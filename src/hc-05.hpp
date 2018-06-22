@@ -15,7 +15,7 @@
 class HC05 {
   public:
     enum class BaudRates {
-        ONE = 0,
+        ONE = 1,
         TWO,
         THREE,
         FOUR,
@@ -34,15 +34,25 @@ class HC05 {
     static constexpr const uint8_t pinSize = 4;
     static constexpr const uint8_t maxMessageSize = 50;
 
-    enum class CommandTypes { test = 0, name, pin, baud }; ///< Used by sendCommand to create a commandString
+    enum class CommandTypes {
+        test = 0,
+        name,
+        pin,
+        baud,
+        connect,
+        disconnect,
+        connectmode,
+        reset,
+        fsad
+    }; ///< Used by sendCommand to create a commandString
 
     const std::array<uint32_t, 12> BaudRateValues = {1200,  2400,   4800,   9600,   19200,  38400,
                                                      57600, 115200, 230400, 460800, 921600, 1382400};
-    const std::array<hwlib::string<1>, 12> BaudRateStrings = {"1\r\n", "2\r\n", "3\r\n", "4\r\n", "5\r\n", "6\r\n",
-                                                              "7\r\n", "8\r\n", "9\r\n", "A\r\n", "B\r\n", "C\r\n"};
-    const std::array<hwlib::string<maxNameSize>, 4> commands = {"AT\r\n", "AT+NAME", "AT+PIN", "AT+BAUD"};
-    const std::array<hwlib::string<maxNameSize>, 4> responses = {"OK", "OKsetname", "OKsetpin", "OKsetbaud"};
-    uint8_t discoveredDevices[32]; ///< Used for storing the connection id of a discovered device.
+    const std::array<hwlib::string<1>, 13> numberStrings = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C"};
+    const std::array<hwlib::string<maxNameSize>, 9> commands = {
+        "AT", "AT+NAME=", "AT+PSWD=", "AT+UART=", "AT+LINK=", "AT+DISC", "AT+CMODE=", "AT+ORGL", "AT+FSAD="};
+    // const std::array<hwlib::string<maxNameSize>, 4> responses = {"OK", "OKsetname", "OKsetpin", "OKsetbaud"};
+    // uint8_t discoveredDevices[32]; ///< Used for storing the connection id of a discovered device.
     BaudRates baudrate = BaudRates::SIX;
 
     UARTConnection connection;
@@ -63,12 +73,24 @@ class HC05 {
 
         return true;
     }
+    template <size_t size>
+    bool findAcknowledgement(const hwlib::string<size> &string) {
+        for (size_t i = 0; i < size; ++i) {
+            if (string[i] == 'O') {
+                if (string[i + 1] == 'K') {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
     template <size_t size>
     bool sendCommand(CommandTypes commandType, hwlib::string<size> data = "") {
-        const auto &expectedResponseMessage = responses[static_cast<int>(commandType)];
+        // const auto &expectedResponseMessage = responses[static_cast<int>(commandType)];
         // Create command
         auto command = commands[static_cast<int>(commandType)];
+        data += "\r\n";
         command += data;
 
         // Send command
@@ -77,10 +99,11 @@ class HC05 {
         // Get response
         // TODO: Try to get length to work, currently gives the value of 'expectedResponseMessage' is not usable in a constant
         // expression auto result = receive<expectedResponseMessage.length()>();
-        auto result = receive<2>();
+        auto result = receive<maxMessageSize>();
+        auto acknowledgement = findAcknowledgement<maxMessageSize>(result);
 
         // Check if respose is as expected
-        return compareString<2>(result, expectedResponseMessage);
+        return acknowledgement;
     }
 
   public:
@@ -95,12 +118,12 @@ class HC05 {
      *
      * @param[in]     deviceID    An unique ID of a device.
      */
-    void connect(int deviceID);
+    bool connect(hwlib::string<maxMessageSize> deviceID);
 
     /**
      * @brief Used to disconnect from other devices.
      */
-    void disconnect();
+    bool disconnect();
 
     /**
      * @brief Used to read the name of this device.
@@ -212,6 +235,12 @@ class HC05 {
     int checkDataLength(hwlib::string<HC05::maxMessageSize> data);
 
     hwlib::string<maxMessageSize> getVersion();
+
+    bool setConnectMode(int mode);
+
+    bool resetSettings();
+
+    bool searchAuthenticatedDevice(hwlib::string<maxMessageSize> deviceID);
 };
 
 #endif

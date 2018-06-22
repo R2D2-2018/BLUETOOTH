@@ -8,6 +8,8 @@ int main() {
     hwlib::wait_ms(1000);
     HC05 bluetooth;
 
+    hwlib::cout << bluetooth.resetSettings();
+
     // if (bluetooth.setName("R2D2-B1")) {
     //     hwlib::cout << "Renamed module" << hwlib::endl;
     // } else {
@@ -27,11 +29,10 @@ int main() {
     // }
 
     while (true) {
-        auto data = bluetooth.getVersion();
-        for (int i = 0; i < bluetooth.checkDataLength(data); i++) {
-            hwlib::cout << data[i];
-        }
-        // bluetooth.testConnection();
+        // auto data = bluetooth.getVersion();
+        // for (int i = 0; i < bluetooth.checkDataLength(data); i++) {
+        //     hwlib::cout << data[i];
+        // }
         // hwlib::cout << bluetooth.getName() << ": " << ((bluetooth.testConnection()) ? "Connected" : "Not connected") <<
         // hwlib::endl;
     }

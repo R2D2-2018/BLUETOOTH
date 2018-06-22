@@ -6,23 +6,15 @@ HC05::HC05() : connection(38400, UARTController::ONE) {
 }
 
 bool HC05::testConnection() {
-    const hwlib::string<2> message = "OK";
-
-    // Set command
-    connection << "AT\r\n";
-    auto data = receiveData();
-    for (int i = 0; i < checkDataLength(data); i++) {
-        hwlib::cout << data[i];
-    }
-    return compareString<2>(data, message);
+    return sendCommand<maxMessageSize>(CommandTypes::test);
 }
 
-void HC05::connect(int deviceID) {
-    hwlib::cout << "Connect to device: " << deviceID << '\n';
+bool HC05::connect(hwlib::string<maxMessageSize> deviceID) {
+    return sendCommand<maxMessageSize>(CommandTypes::connect, deviceID);
 }
 
-void HC05::disconnect() {
-    hwlib::cout << "Disconnect\n";
+bool HC05::disconnect() {
+    return sendCommand<maxMessageSize>(CommandTypes::disconnect);
 }
 
 hwlib::string<HC05::maxNameSize> HC05::getName() {
@@ -71,7 +63,7 @@ uint32_t HC05::getBaud() {
 
 bool HC05::setBaud(BaudRates baud) {
     // Send command to UC06
-    bool wasSuccessful = sendCommand<maxNameSize>(CommandTypes::baud, BaudRateStrings[static_cast<int>(baud)]);
+    bool wasSuccessful = sendCommand<maxNameSize>(CommandTypes::baud, numberStrings[static_cast<int>(baud)]);
 
     // Change name if it was successful
     if (wasSuccessful) {
@@ -110,4 +102,16 @@ hwlib::string<HC05::maxMessageSize> HC05::getVersion() {
     connection << "AT+VERSION?\r\n";
     auto data = receiveData();
     return data;
+}
+
+bool HC05::setConnectMode(int mode) {
+    return sendCommand<maxMessageSize>(CommandTypes::connectmode, numberStrings[mode]);
+}
+
+bool HC05::resetSettings() {
+    return sendCommand<maxMessageSize>(CommandTypes::reset);
+}
+
+bool HC05::searchAuthenticatedDevice(hwlib::string<maxMessageSize> deviceID) {
+    return sendCommand<maxMessageSize>(CommandTypes::fsad, deviceID);
 }
