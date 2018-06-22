@@ -245,15 +245,6 @@ class HC06 {
     }
 
     /**
-     * @brief Used to send data to other devices.
-     *
-     * This function will send the data provided.
-     *
-     * @param[in]     data    A pointer to a uint8_t data array.
-     */
-    void send(uint8_t *data);
-
-    /**
      * @brief Used to get the current baudrate of this device.
      *
      * This function will return the current baudrate used.

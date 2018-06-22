@@ -56,10 +56,6 @@ bool HC06::setPincode(hwlib::string<pinSize> newPincode) {
     return wasSuccessful;
 }
 
-void HC06::send(uint8_t *data) {
-    hwlib::cout << "Sending data\n";
-}
-
 uint32_t HC06::getBaud() {
     return BaudRateValues[static_cast<uint32_t>(baudrate)];
 }
