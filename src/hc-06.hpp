@@ -12,6 +12,8 @@
 #include "wrap-hwlib.hpp"
 #include <array>
 
+namespace Bluetooth {
+
 class HC06 {
   public:
     enum class BaudRates { ///< Used by the setBaud method to set the baudrates, default = FOUR
@@ -60,7 +62,6 @@ class HC06 {
     ///< Used by sendCommand method to validate response
     const std::array<hwlib::string<maxNameSize>, 5> responses = {{"OK", "OKsetname", "OKsetPIN", "OK", "OK"}};
 
-    uint8_t discoveredDevices[32];              ///< Used for storing the connection id of a discovered device.
     BaudRates baudrate = BaudRates::FOUR;       ///< Used for the baudrate
     ParityModes parityMode = ParityModes::NONE; ///< Used for the parityMode
     hwlib::string<maxNameSize> name;            ///< Used for storing the name of this device.
@@ -170,20 +171,6 @@ class HC06 {
     bool testConnection();
 
     /**
-     * @brief Used to connect to other devices.
-     *
-     * Connect to the specified device ID. To get the device ID use function "search".
-     *
-     * @param[in]     deviceID    An unique ID of a device.
-     */
-    void connect(int deviceID);
-
-    /**
-     * @brief Used to disconnect from other devices.
-     */
-    void disconnect();
-
-    /**
      * @brief Used to read the name of this device.
      *
      * This function will read the current device name and return a string.
@@ -217,15 +204,6 @@ class HC06 {
      * @param[in]     newPincode    The new pincode
      */
     bool setPincode(hwlib::string<pinSize> newPincode);
-
-    /**
-     * @brief Used to pair with other devices.
-     *
-     * Pair with the specified device ID. To get the device ID use function "search".
-     *
-     * @param[in]     deviceID    An unique ID of a device.
-     */
-    void pair(int deviceID);
 
     /**
      * @brief Used the uart connection to receive a message
@@ -269,24 +247,6 @@ class HC06 {
     }
 
     /**
-     * @brief Used to discover any discoverable devices.
-     *
-     * This function will return a device id for all discovered devices. Use this ID to connect.
-     *
-     * @return uint8_t pointer to an array of unique device ID's.
-     */
-    uint8_t *search();
-
-    /**
-     * @brief Used to send data to other devices.
-     *
-     * This function will send the data provided.
-     *
-     * @param[in]     data    A pointer to a uint8_t data array.
-     */
-    void send(uint8_t *data);
-
-    /**
      * @brief Used to get the current baudrate of this device.
      *
      * This function will return the current baudrate used.
@@ -298,13 +258,6 @@ class HC06 {
      * @param[in]     baud    An integer specifying the baud rate.
      */
     bool setBaud(BaudRates baud);
-
-    /**
-     * @brief choose whether the chip will be discoverable or not.
-     *
-     * @param[in]     visible    An boolean to set the visibility.
-     */
-    void setVisibility(bool visible);
 
     /**
      * @brief Used to get the parity check mode of the device.
@@ -319,5 +272,7 @@ class HC06 {
      */
     bool setParityCheckMode(ParityModes newParityMode);
 };
+
+} // namespace Bluetooth
 
 #endif

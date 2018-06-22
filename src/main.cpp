@@ -6,7 +6,7 @@ int main() {
     WDT->WDT_MR = WDT_MR_WDDIS;
     hwlib::wait_ms(1000);
     UARTConnection connection(9600, UARTController::ONE);
-    HC06 bluetooth(connection);
+    Bluetooth::HC06 bluetooth(connection);
 
     if (bluetooth.setName("R2D2-B1")) {
         hwlib::cout << "Renamed module" << hwlib::endl;
@@ -15,18 +15,18 @@ int main() {
     }
 
     if (bluetooth.setPincode("1234")) {
-        hwlib::cout << "Set pincode to 1234" << hwlib::endl;
+        hwlib::cout << "Set pincode to " << bluetooth.getPincode() << hwlib::endl;
     } else {
         hwlib::cout << "Could not set pin" << hwlib::endl;
     }
 
-    if (bluetooth.setBaud(HC06::BaudRates::FOUR)) {
+    if (bluetooth.setBaud(Bluetooth::HC06::BaudRates::FOUR)) {
         hwlib::cout << "Set baudrate to: " << bluetooth.getBaud() << hwlib::endl;
     } else {
         hwlib::cout << "Could not set baudrate" << hwlib::endl;
     }
 
-    if (bluetooth.setParityCheckMode(HC06::ParityModes::NONE)) {
+    if (bluetooth.setParityCheckMode(Bluetooth::HC06::ParityModes::NONE)) {
         hwlib::cout << "Set parityMode to " << static_cast<int>(bluetooth.getParityCheckMode()) << hwlib::endl;
     } else {
         hwlib::cout << "Could not set parity" << hwlib::endl;
