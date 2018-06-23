@@ -8,7 +8,26 @@ int main() {
     hwlib::wait_ms(1000);
     HC05 bluetooth;
 
+    bluetooth.setMode(1);
+    hwlib::wait_ms(1000);
     hwlib::cout << bluetooth.resetSettings();
+    hwlib::cout << bluetooth.setBaud(HC05::BaudRates::FOUR);
+    hwlib::cout << bluetooth.setConnectMode(0);
+    hwlib::cout << bluetooth.setRole(1);
+    hwlib::cout << bluetooth.reset();
+    hwlib::cout << bluetooth.searchAuthenticatedDevice("98D3,31,FC7389");
+    hwlib::cout << bluetooth.pair("98D3,31,FC7389");
+    hwlib::cout << bluetooth.bind("98D3,31,FC7389");
+    hwlib::cout << bluetooth.setConnectMode(1);
+    hwlib::cout << bluetooth.connect("98D3,31,FC7389");
+    // auto data = bluetooth.initSPP();
+    // for (int i = 0; i < bluetooth.checkDataLength(data); i++) {
+    //     hwlib::cout << data[i];
+    // }
+    // auto data2 = bluetooth.inquiryDevices();
+    // for (int i = 0; i < bluetooth.checkDataLength(data2); i++) {
+    //     hwlib::cout << data2[i];
+    // }
 
     // if (bluetooth.setName("R2D2-B1")) {
     //     hwlib::cout << "Renamed module" << hwlib::endl;

@@ -32,7 +32,7 @@ class HC05 {
   private:
     static constexpr const uint8_t maxNameSize = 50;
     static constexpr const uint8_t pinSize = 4;
-    static constexpr const uint8_t maxMessageSize = 50;
+    static constexpr const uint8_t maxMessageSize = 60;
 
     enum class CommandTypes {
         test = 0,
@@ -42,15 +42,20 @@ class HC05 {
         connect,
         disconnect,
         connectmode,
+        restore,
+        fsad,
+        pair,
+        role,
         reset,
-        fsad
+        bind
     }; ///< Used by sendCommand to create a commandString
 
-    const std::array<uint32_t, 12> BaudRateValues = {1200,  2400,   4800,   9600,   19200,  38400,
-                                                     57600, 115200, 230400, 460800, 921600, 1382400};
+    const std::array<hwlib::string<7>, 12> BaudRateValues = {"1200",  "2400",   "4800",   "9600",   "19200",  "38400",
+                                                             "57600", "115200", "230400", "460800", "921600", "1382400"};
     const std::array<hwlib::string<1>, 13> numberStrings = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C"};
-    const std::array<hwlib::string<maxNameSize>, 9> commands = {
-        "AT", "AT+NAME=", "AT+PSWD=", "AT+UART=", "AT+LINK=", "AT+DISC", "AT+CMODE=", "AT+ORGL", "AT+FSAD="};
+    const std::array<hwlib::string<maxNameSize>, 13> commands = {
+        "AT",      "AT+NAME=", "AT+PSWD=", "AT+UART=", "AT+LINK=", "AT+DISC", "AT+CMODE=",
+        "AT+ORGL", "AT+FSAD=", "AT+PAIR=", "AT+ROLE=", "AT+RESET", "AT+BIND="};
     // const std::array<hwlib::string<maxNameSize>, 4> responses = {"OK", "OKsetname", "OKsetpin", "OKsetbaud"};
     // uint8_t discoveredDevices[32]; ///< Used for storing the connection id of a discovered device.
     BaudRates baudrate = BaudRates::SIX;
@@ -167,7 +172,7 @@ class HC05 {
      *
      * @param[in]     deviceID    An unique ID of a device.
      */
-    void pair(int deviceID);
+    bool pair(hwlib::string<maxMessageSize> deviceID);
 
     /**
      * @brief Used the uart connection to receive a message
@@ -218,7 +223,7 @@ class HC05 {
      *
      * This function will return the current baudrate used.
      */
-    uint32_t getBaud();
+    hwlib::string<7> getBaud();
 
     /**
      * @brief Used to set the baud rate of the connection.
@@ -241,6 +246,16 @@ class HC05 {
     bool resetSettings();
 
     bool searchAuthenticatedDevice(hwlib::string<maxMessageSize> deviceID);
+
+    bool setRole(int role);
+
+    bool reset();
+
+    bool bind(hwlib::string<maxMessageSize> deviceID);
+
+    hwlib::string<HC05::maxMessageSize> initSPP();
+
+    hwlib::string<maxMessageSize> inquiryDevices();
 };
 
 #endif

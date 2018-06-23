@@ -10,7 +10,10 @@ bool HC05::testConnection() {
 }
 
 bool HC05::connect(hwlib::string<maxMessageSize> deviceID) {
-    return sendCommand<maxMessageSize>(CommandTypes::connect, deviceID);
+    if (searchAuthenticatedDevice(deviceID)) {
+        return sendCommand<maxMessageSize>(CommandTypes::connect, deviceID);
+    }
+    return false;
 }
 
 bool HC05::disconnect() {
@@ -49,21 +52,24 @@ bool HC05::setPincode(hwlib::string<pinSize> newPincode) {
     return wasSuccessful;
 }
 
-void HC05::pair(int deviceID) {
-    hwlib::cout << "Pair with device: " << deviceID << '\n';
+bool HC05::pair(hwlib::string<maxMessageSize> deviceID) {
+    deviceID += ", 9";
+    return sendCommand<maxMessageSize>(CommandTypes::pair, deviceID);
 }
 
 void HC05::send(hwlib::string<maxMessageSize> msg) {
     connection << msg;
 }
 
-uint32_t HC05::getBaud() {
+hwlib::string<7> HC05::getBaud() {
     return BaudRateValues[static_cast<uint32_t>(baudrate)];
 }
 
 bool HC05::setBaud(BaudRates baud) {
     // Send command to UC06
-    bool wasSuccessful = sendCommand<maxNameSize>(CommandTypes::baud, numberStrings[static_cast<int>(baud)]);
+    hwlib::string<maxMessageSize> cmd = BaudRateValues[static_cast<int>(baud)];
+    cmd += ",1,2";
+    bool wasSuccessful = sendCommand<maxMessageSize>(CommandTypes::baud, cmd);
 
     // Change name if it was successful
     if (wasSuccessful) {
@@ -109,9 +115,34 @@ bool HC05::setConnectMode(int mode) {
 }
 
 bool HC05::resetSettings() {
-    return sendCommand<maxMessageSize>(CommandTypes::reset);
+    return sendCommand<maxMessageSize>(CommandTypes::restore);
 }
 
 bool HC05::searchAuthenticatedDevice(hwlib::string<maxMessageSize> deviceID) {
     return sendCommand<maxMessageSize>(CommandTypes::fsad, deviceID);
+}
+
+bool HC05::setRole(int role) {
+    return sendCommand<maxMessageSize>(CommandTypes::role, numberStrings[role]);
+}
+
+bool HC05::reset() {
+    return sendCommand<maxMessageSize>(CommandTypes::reset);
+}
+
+bool HC05::bind(hwlib::string<maxMessageSize> deviceID) {
+    return sendCommand<maxMessageSize>(CommandTypes::bind, deviceID);
+}
+
+hwlib::string<HC05::maxMessageSize> HC05::initSPP() {
+    connection << "AT+INIT\r\n";
+    auto data = receiveData();
+    return data;
+}
+
+hwlib::string<HC05::maxMessageSize> HC05::inquiryDevices() {
+    connection << "AT+INQM=1,9,1\r\n";
+    connection << "AT+INQ\r\n";
+    auto data = receiveData();
+    return data;
 }
