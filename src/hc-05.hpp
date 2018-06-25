@@ -51,12 +51,12 @@ class HC05 {
         initspp
     }; ///< Used by sendCommand to create a commandString
 
-    const std::array<hwlib::string<7>, 12> BaudRateValues = {"1200",  "2400",   "4800",   "9600",   "19200",  "38400",
-                                                             "57600", "115200", "230400", "460800", "921600", "1382400"};
-    const std::array<hwlib::string<1>, 13> numberStrings = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C"};
+    const std::array<hwlib::string<7>, 12> BaudRateValues = {
+        {"1200", "2400", "4800", "9600", "19200", "38400", "57600", "115200", "230400", "460800", "921600", "1382400"}};
+    const std::array<hwlib::string<1>, 13> numberStrings = {{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C"}};
     const std::array<hwlib::string<maxNameSize>, 14> commands = {
-        "AT",      "AT+NAME=", "AT+PSWD=", "AT+UART=", "AT+LINK=", "AT+DISC",  "AT+CMODE=",
-        "AT+ORGL", "AT+FSAD=", "AT+PAIR=", "AT+ROLE=", "AT+RESET", "AT+BIND=", "AT+INIT"};
+        {"AT", "AT+NAME=", "AT+PSWD=", "AT+UART=", "AT+LINK=", "AT+DISC", "AT+CMODE=", "AT+ORGL",
+         "AT+FSAD=", "AT+PAIR=", "AT+ROLE=", "AT+RESET", "AT+BIND=", "AT+INIT"}};
     BaudRates baudrate = BaudRates::SIX;
 
     IOStream &connection;
