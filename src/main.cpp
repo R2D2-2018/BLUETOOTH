@@ -8,6 +8,12 @@ int main() {
     UARTConnection connection(9600, UARTController::ONE);
     Bluetooth::HC06 bluetooth(connection);
 
+    if (bluetooth.setBaud(Bluetooth::HC06::BaudRates::FOUR)) {
+        hwlib::cout << "Set baudrate to: " << bluetooth.getBaud() << hwlib::endl;
+    } else {
+        hwlib::cout << "Could not set baudrate" << hwlib::endl;
+    }
+
     if (bluetooth.setName("R2D2-B1")) {
         hwlib::cout << "Renamed module" << hwlib::endl;
     } else {
@@ -20,19 +26,21 @@ int main() {
         hwlib::cout << "Could not set pin" << hwlib::endl;
     }
 
-    if (bluetooth.setBaud(Bluetooth::HC06::BaudRates::FOUR)) {
-        hwlib::cout << "Set baudrate to: " << bluetooth.getBaud() << hwlib::endl;
-    } else {
-        hwlib::cout << "Could not set baudrate" << hwlib::endl;
-    }
-
     if (bluetooth.setParityCheckMode(Bluetooth::HC06::ParityModes::NONE)) {
         hwlib::cout << "Set parityMode to " << static_cast<int>(bluetooth.getParityCheckMode()) << hwlib::endl;
     } else {
         hwlib::cout << "Could not set parity" << hwlib::endl;
     }
 
+    constexpr size_t dataSize = 60;
     while (true) {
-        hwlib::cout << bluetooth.getName() << ": " << ((bluetooth.testConnection()) ? "Connected" : "Not connected") << hwlib::endl;
+        if (bluetooth.isConnectedToBlueTooth()) {
+            if (connection.available() > dataSize) {
+                hwlib::cout << bluetooth.receive<dataSize>();
+            }
+        } else {
+            hwlib::cout << bluetooth.getName() << ": " << ((bluetooth.testConnection()) ? "Connected" : "Not connected")
+                        << hwlib::endl;
+        }
     }
 }

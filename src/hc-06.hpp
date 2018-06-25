@@ -66,6 +66,7 @@ class HC06 {
     ParityModes parityMode = ParityModes::NONE; ///< Used for the parityMode
     hwlib::string<maxNameSize> name;            ///< Used for storing the name of this device.
     hwlib::string<pinSize> pincode;             ///< Used for storing a local version of the 4 digit pincode saved as a byte
+    bool connectedToDevice = false;             ///< Used for keeping track if the device is connected via Bluetooth
   private:
     /*
      * @brief convert uint32_t to hwlib::string
@@ -114,6 +115,7 @@ class HC06 {
     template <size_t size>
     bool compareString(const hwlib::string<size> &string1, const hwlib::string<size> &string2) {
         for (size_t i = 0; i < size; ++i) {
+            // hwlib::cout << string1[i] << ", " << string2[i] << hwlib::endl;
             if (string1[i] != string2[i]) {
                 return false;
             }
@@ -162,9 +164,23 @@ class HC06 {
     explicit HC06(IOStream &connection);
 
     /*
-     * @brief Tests if there is a connection with the device
+     * @brief getter for connectedToDevice
+     *
+     * Returns if the device is connected to Bluetooth,
+     * since there is no way to ask this from the device we save it ourselves.
+     *
+     * @return value of connectedToDevice
+     */
+    bool isConnectedToBlueTooth() const {
+        return connectedToDevice;
+    }
+
+    /*
+     * @brief Tests if there is a connection with the device or Bluetooth
      *
      * Sends the "AT" command and checks if the device responds with "OK"
+     * If there is no OK response it will check if there is a CN resonse to
+     * check if there is Bluetooth connection
      *
      * @return True if there is a connection, else false
      */
@@ -215,7 +231,7 @@ class HC06 {
      * @param[in]     timeOut     Number of us before the function times out
      * @return The hwlib::string with the reveived data
      */
-    template <int size>
+    template <size_t size>
     hwlib::string<size> receive(uint_fast64_t timeOut = 1'000'000) {
         hwlib::string<size> result;
 
@@ -226,10 +242,10 @@ class HC06 {
         }
 
         // Write data to string
-        for (unsigned int i = 0; i < size; i++) {
-            if (connection.count_available()) {
-                result[i] = connection.getc();
-                // hwlib::cout << connection.getc() << hwlib::endl;
+        for (size_t i = 0; i < size; i++) {
+            if (connection.count_available() > 0) {
+                result += connection.getc();
+                // hwlib::cout << result[i] << hwlib::endl;
             }
         }
 
