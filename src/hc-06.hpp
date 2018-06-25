@@ -12,9 +12,11 @@
 #include "wrap-hwlib.hpp"
 #include <array>
 
+namespace Bluetooth {
+
 class HC06 {
   public:
-    enum class BaudRates { ///< Used by the setBaud method to set the baudrates
+    enum class BaudRates { ///< Used by the setBaud method to set the baudrates, default = FOUR
         ONE = 0,
         TWO,
         THREE,
@@ -28,6 +30,8 @@ class HC06 {
         B,
         C
     };
+    ///< Used by the parityMode to set parity, default = NONE
+    enum class ParityModes { NONE = 0, ODD, EVEN };
 
   private:
     ///< Used for UART connection
@@ -39,8 +43,10 @@ class HC06 {
     static constexpr const uint8_t pinSize = 4;
     ///< Used by get and set pin for hwlib::string
     static constexpr const uint8_t baudrateSize = 1;
+    ///< Used by get and set pin for hwlib::string
+    static constexpr const uint8_t parityModeSize = 4;
     ///< Used by sendCommand to create a commandString
-    enum class CommandTypes { test = 0, name, pin, baud };
+    enum class CommandTypes { test = 0, name, pin, baud, parity };
 
     ///< Used to convert BaudRates to value
     const std::array<uint32_t, 12> BaudRateValues = {
@@ -48,15 +54,19 @@ class HC06 {
     ///< Used to convert BaudRates to string
     const std::array<hwlib::string<baudrateSize>, 12> BaudRateStrings = {
         {"1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C"}};
+    ///< Used to convert ParityModes to string
+    const std::array<hwlib::string<parityModeSize>, 3> parityStrings = {{"PN", "PO", "PE"}};
+    const std::array<hwlib::string<parityModeSize>, 3> parityResponseStrings = {{"NONE", "ODD", "EVEN"}};
     ///< Used by sendCommand method to send commands to UC06 device
-    const std::array<hwlib::string<maxNameSize>, 4> commands = {{"AT", "AT+NAME", "AT+PIN", "AT+BAUD"}};
+    const std::array<hwlib::string<maxNameSize>, 5> commands = {{"AT", "AT+NAME", "AT+PIN", "AT+BAUD", "AT+"}};
     ///< Used by sendCommand method to validate response
-    const std::array<hwlib::string<maxNameSize>, 4> responses = {{"OK", "OKsetname", "OKsetPIN", "OK"}};
+    const std::array<hwlib::string<maxNameSize>, 5> responses = {{"OK", "OKsetname", "OKsetPIN", "OK", "OK"}};
 
-    uint8_t discoveredDevices[32];        ///< Used for storing the connection id of a discovered device.
-    BaudRates baudrate = BaudRates::FOUR; ///< Used for the baudrate
-    hwlib::string<maxNameSize> name;      ///< Used for storing the name of this device.
-    hwlib::string<pinSize> pincode;       ///< Used for storing a local version of the 4 digit pincode saved as a byte
+    BaudRates baudrate = BaudRates::FOUR;       ///< Used for the baudrate
+    ParityModes parityMode = ParityModes::NONE; ///< Used for the parityMode
+    hwlib::string<maxNameSize> name;            ///< Used for storing the name of this device.
+    hwlib::string<pinSize> pincode;             ///< Used for storing a local version of the 4 digit pincode saved as a byte
+    bool connectedToDevice = false;             ///< Used for keeping track if the device is connected via Bluetooth
   private:
     /*
      * @brief convert uint32_t to hwlib::string
@@ -105,6 +115,7 @@ class HC06 {
     template <size_t size>
     bool compareString(const hwlib::string<size> &string1, const hwlib::string<size> &string2) {
         for (size_t i = 0; i < size; ++i) {
+            // hwlib::cout << string1[i] << ", " << string2[i] << hwlib::endl;
             if (string1[i] != string2[i]) {
                 return false;
             }
@@ -153,27 +164,27 @@ class HC06 {
     explicit HC06(IOStream &connection);
 
     /*
-     * @brief Tests if there is a connection with the device
+     * @brief getter for connectedToDevice
+     *
+     * Returns if the device is connected to Bluetooth,
+     * since there is no way to ask this from the device we save it ourselves.
+     *
+     * @return value of connectedToDevice
+     */
+    bool isConnectedToBlueTooth() const {
+        return connectedToDevice;
+    }
+
+    /*
+     * @brief Tests if there is a connection with the device or Bluetooth
      *
      * Sends the "AT" command and checks if the device responds with "OK"
+     * If there is no OK response it will check if there is a CN resonse to
+     * check if there is Bluetooth connection
      *
      * @return True if there is a connection, else false
      */
     bool testConnection();
-
-    /**
-     * @brief Used to connect to other devices.
-     *
-     * Connect to the specified device ID. To get the device ID use function "search".
-     *
-     * @param[in]     deviceID    An unique ID of a device.
-     */
-    void connect(int deviceID);
-
-    /**
-     * @brief Used to disconnect from other devices.
-     */
-    void disconnect();
 
     /**
      * @brief Used to read the name of this device.
@@ -211,15 +222,6 @@ class HC06 {
     bool setPincode(hwlib::string<pinSize> newPincode);
 
     /**
-     * @brief Used to pair with other devices.
-     *
-     * Pair with the specified device ID. To get the device ID use function "search".
-     *
-     * @param[in]     deviceID    An unique ID of a device.
-     */
-    void pair(int deviceID);
-
-    /**
      * @brief Used the uart connection to receive a message
      *
      * This function waits until the uart available is the size of the message or when it timesOut.
@@ -229,26 +231,29 @@ class HC06 {
      * @param[in]     timeOut     Number of us before the function times out
      * @return The hwlib::string with the reveived data
      */
-    template <int size>
+    template <size_t size>
     hwlib::string<size> receive(uint_fast64_t timeOut = 1'000'000) {
         hwlib::string<size> result;
 
         // Wait for response, timeout at when it takes to long
-        auto start = hwlib::now_us();
+        volatile auto start = hwlib::now_us();
         while (connection.count_available() < size && hwlib::now_us() - start < timeOut) {
             // hwlib::cout << connection.char_available();
         }
 
         // Write data to string
-        for (unsigned int i = 0; i < size; i++) {
-            if (connection.count_available()) {
-                result[i] = connection.getc();
-                // hwlib::cout << connection.getc() << hwlib::endl;
+        for (size_t i = 0; i < size; i++) {
+            if (connection.count_available() > 0) {
+                result += connection.getc();
+                // hwlib::cout << result[i] << hwlib::endl;
             }
         }
 
         // Clear uart buffer
+        start = hwlib::now_us();
         while (hwlib::now_us() - start < timeOut) {
+            connection.getc(); // Without this the compiler will remove the loop
+            // hwlib::cout << "Test" << hwlib::endl;
         }
         for (size_t i = 0; i < connection.count_available(); ++i) {
             connection.getc();
@@ -256,24 +261,6 @@ class HC06 {
 
         return result;
     }
-
-    /**
-     * @brief Used to discover any discoverable devices.
-     *
-     * This function will return a device id for all discovered devices. Use this ID to connect.
-     *
-     * @return uint8_t pointer to an array of unique device ID's.
-     */
-    uint8_t *search();
-
-    /**
-     * @brief Used to send data to other devices.
-     *
-     * This function will send the data provided.
-     *
-     * @param[in]     data    A pointer to a uint8_t data array.
-     */
-    void send(uint8_t *data);
 
     /**
      * @brief Used to get the current baudrate of this device.
@@ -289,11 +276,19 @@ class HC06 {
     bool setBaud(BaudRates baud);
 
     /**
-     * @brief choose whether the chip will be discoverable or not.
+     * @brief Used to get the parity check mode of the device.
      *
-     * @param[in]     visible    An boolean to set the visibility.
+     * This function will return the current baudrate used.
      */
-    void setVisibility(bool visible);
+    ParityModes getParityCheckMode();
+
+    /**
+     * @brief Used to set the parity check mode of the device.
+     * @param[in]     newParityMode    That paritymode the device needs to take on.
+     */
+    bool setParityCheckMode(ParityModes newParityMode);
 };
+
+} // namespace Bluetooth
 
 #endif

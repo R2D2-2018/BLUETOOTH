@@ -6,61 +6,36 @@
 int main() {
     WDT->WDT_MR = WDT_MR_WDDIS;
     hwlib::wait_ms(1000);
+    UARTConnection connection(9600, UARTController::ONE);
+    Bluetooth::HC06 bluetooth(connection);
 
-    UARTConnection connectionmaster(38400, UARTController::ONE);
-    UARTConnection connectionslave(9600, UARTController::TWO);
-    HC05 master(connectionmaster);
-    // HC06 slave(connectionslave);
+    if (bluetooth.setBaud(Bluetooth::HC06::BaudRates::FOUR)) {
+        hwlib::cout << "Set baudrate to: " << bluetooth.getBaud() << hwlib::endl;
+    } else {
+        hwlib::cout << "Could not set baudrate" << hwlib::endl;
+    }
 
-    // if (slave.setName("Gurneel")) {
-    //     hwlib::cout << "Renamed module" << hwlib::endl;
-    // } else {
-    //     hwlib::cout << "Could not rename module" << hwlib::endl;
-    // }
+    if (bluetooth.setPincode("1234")) {
+        hwlib::cout << "Set pincode to " << bluetooth.getPincode() << hwlib::endl;
+    } else {
+        hwlib::cout << "Could not set pin" << hwlib::endl;
+    }
 
-    // if (slave.setPincode("1234")) {
-    //     hwlib::cout << "Set pincode to 1234" << hwlib::endl;
-    // } else {
-    //     hwlib::cout << "Could not set pin" << hwlib::endl;
-    // }
+    if (bluetooth.setParityCheckMode(Bluetooth::HC06::ParityModes::NONE)) {
+        hwlib::cout << "Set parityMode to " << static_cast<int>(bluetooth.getParityCheckMode()) << hwlib::endl;
+    } else {
+        hwlib::cout << "Could not set parity" << hwlib::endl;
+    }
 
-    // if (slave.setBaud(HC06::BaudRates::FOUR)) {
-    //     hwlib::cout << "Set baudrate to: " << slave.getBaud() << hwlib::endl;
-    // } else {
-    //     hwlib::cout << "Could not set baudrate" << hwlib::endl;
-    // }
-
-    master.setMode(1);
-    hwlib::wait_ms(1000);
-    hwlib::cout << master.resetSettings();
-    hwlib::cout << master.setBaud(HC05::BaudRates::SIX);
-    hwlib::cout << master.setPincode("1234");
-    hwlib::cout << master.setConnectMode(0);
-    hwlib::cout << master.setRole(1);
-    hwlib::cout << master.reset();
-    hwlib::cout << master.initSPP();
-    hwlib::cout << master.pair("98D3,31,FC7389");
-    hwlib::cout << master.bind("98D3,31,FC7389");
-    hwlib::cout << master.connect("98D3,31,FC7389");
-    // hwlib::cout << master.pair("98D3,31,FC6BE2");
-    // hwlib::cout << master.bind("98D3,31,FC6BE2");
-    // hwlib::cout << master.connect("98D3,31,FC6BE2");
-
+    constexpr size_t dataSize = 60;
     while (true) {
-        char choice;
-        hwlib::string<60> command;
-        hwlib::cin >> choice;
-        hwlib::cout << choice << hwlib::endl;
-        if (choice == '1') {
-            command = "CN";
-        } else if (choice == '2') {
-            command = "OK";
-        } else if (choice == '3') {
-            command = "\n  .=.\n '==c|\n [)-+|\n //'_|\n/]==;\\\nR2D2 2018 Team 4\n";
-        } else if (choice == '4') {
-            master.connect("98D3,31,FC7389");
+        if (bluetooth.isConnectedToBlueTooth()) {
+            if (connection.available() > dataSize) {
+                hwlib::cout << bluetooth.receive<dataSize>();
+            }
+        } else {
+            hwlib::cout << bluetooth.getName() << ": " << ((bluetooth.testConnection()) ? "Connected" : "Not connected")
+                        << hwlib::endl;
         }
-        hwlib::cout << command << hwlib::endl;
-        master.send(command);
     }
 }

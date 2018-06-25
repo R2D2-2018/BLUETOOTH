@@ -1,25 +1,30 @@
 #include "hc-06.hpp"
 
+namespace Bluetooth {
+
 HC06::HC06(IOStream &connection) : connection(connection) {
 }
 
 bool HC06::testConnection() {
     const hwlib::string<2> message = "OK";
+    const hwlib::string<9> connectedToDeviceMessage = "CN";
 
     // Set command
     connection << "AT";
 
     auto data = receive<2>();
 
-    return compareString<2>(data, message);
-}
+    if (compareString<2>(data, message)) {
+        connectedToDevice = false; // Connected to arduino, not to Bluetooth
+        return true;
+    }
 
-void HC06::connect(int deviceID) {
-    hwlib::cout << "Connect to device: " << deviceID << '\n';
-}
+    if (compareString<2>(data, connectedToDeviceMessage)) {
+        connectedToDevice = true; // Connected to Bluetooth
+        return true;
+    }
 
-void HC06::disconnect() {
-    hwlib::cout << "Disconnect\n";
+    return false;
 }
 
 hwlib::string<HC06::maxNameSize> HC06::getName() {
@@ -64,19 +69,6 @@ bool HC06::setPincode(hwlib::string<pinSize> newPincode) {
     return wasSuccessful;
 }
 
-void HC06::pair(int deviceID) {
-    hwlib::cout << "Pair with device: " << deviceID << '\n';
-}
-
-uint8_t *HC06::search() {
-    hwlib::cout << "Search for devices\n";
-    return discoveredDevices;
-}
-
-void HC06::send(uint8_t *data) {
-    hwlib::cout << "Sending data\n";
-}
-
 uint32_t HC06::getBaud() {
     return BaudRateValues[static_cast<uint32_t>(baudrate)];
 }
@@ -99,6 +91,24 @@ bool HC06::setBaud(BaudRates baud) {
     return wasSuccessful;
 }
 
-void HC06::setVisibility(bool visible) {
-    hwlib::cout << "Set visibility\n";
+HC06::ParityModes HC06::getParityCheckMode() {
+    return parityMode;
 }
+
+bool HC06::setParityCheckMode(ParityModes newParityMode) {
+    // Get the length of the expected response message
+    // We cannot use the responses array because hwlib::string has no constexpr constructor (yet) and therefore cannot make the
+    // array constexpr, if we could we could use:
+    // static constexpr const auto &length = responses[static_cast<int>(CommandTypes::parity)].length();
+    static constexpr const auto length = 2; // "OK" length
+    // Send command to UC06
+    bool wasSuccessful = sendCommand<parityModeSize, length>(CommandTypes::parity, parityStrings[static_cast<int>(newParityMode)]);
+
+    // Change name if it was successful
+    if (wasSuccessful) {
+        parityMode = newParityMode;
+    }
+
+    return wasSuccessful;
+}
+} // namespace Bluetooth
