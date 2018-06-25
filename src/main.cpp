@@ -5,8 +5,9 @@
 int main() {
     WDT->WDT_MR = WDT_MR_WDDIS;
     hwlib::wait_ms(1000);
-    UARTConnection connection(9600, UARTController::ONE);
-    Bluetooth::HC06 bluetooth(connection);
+    UARTConnection bluetoothConnection(9600, UARTController::ONE);
+    UARTConnection platformConnection(9600, UARTController::TWO);
+    Bluetooth::HC06 bluetooth(bluetoothConnection);
 
     if (bluetooth.setBaud(Bluetooth::HC06::BaudRates::FOUR)) {
         hwlib::cout << "Set baudrate to: " << bluetooth.getBaud() << hwlib::endl;
@@ -32,11 +33,29 @@ int main() {
         hwlib::cout << "Could not set parity" << hwlib::endl;
     }
 
-    constexpr size_t dataSize = 60;
     while (true) {
         if (bluetooth.isConnectedToBlueTooth()) {
-            if (connection.available() > dataSize) {
-                hwlib::cout << bluetooth.receive<dataSize>();
+            if (bluetoothConnection.available() > 0) {
+                const auto data = bluetooth.receive<1>();
+
+                switch (data[0]) {
+                case 'F':
+                    hwlib::cout << "Motor forward" << hwlib::endl;
+                    platformConnection << "F";
+                    break;
+                case 'B':
+                    hwlib::cout << "Motor backward" << hwlib::endl;
+                    platformConnection << "B";
+                    break;
+                case 'R':
+                    hwlib::cout << "Motor turn right" << hwlib::endl;
+                    platformConnection << "R";
+                    break;
+                case 'L':
+                    hwlib::cout << "Motor turn left" << hwlib::endl;
+                    platformConnection << "L";
+                    break;
+                }
             }
         } else {
             hwlib::cout << bluetooth.getName() << ": " << ((bluetooth.testConnection()) ? "Connected" : "Not connected")
