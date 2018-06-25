@@ -7,13 +7,24 @@ HC06::HC06(IOStream &connection) : connection(connection) {
 
 bool HC06::testConnection() {
     const hwlib::string<2> message = "OK";
+    const hwlib::string<9> connectedToDeviceMessage = "CN";
 
     // Set command
     connection << "AT";
 
     auto data = receive<2>();
 
-    return compareString<2>(data, message);
+    if (compareString<2>(data, message)) {
+        connectedToDevice = false; // Connected to arduino, not to Bluetooth
+        return true;
+    }
+
+    if (compareString<2>(data, connectedToDeviceMessage)) {
+        connectedToDevice = true; // Connected to Bluetooth
+        return true;
+    }
+
+    return false;
 }
 
 hwlib::string<HC06::maxNameSize> HC06::getName() {
