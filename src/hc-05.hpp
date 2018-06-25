@@ -63,10 +63,8 @@ class HC05 {
     hwlib::string<maxNameSize> name; ///< Used for storing the name of this device.
     hwlib::string<pinSize> pincode;  ///< Used for storing a local version of the 4 digit pincode saved as a byte
     bool mode = 1;
-    hwlib::target::pin_out select = hwlib::target::pin_out(
-        hwlib::target::pins::d22); ///< Pin used to change the HC05 from the slave loop into the AT-command mode
-    hwlib::target::pin_out power = hwlib::target::pin_out(
-        hwlib::target::pins::d24); ///< Pin used to interupt the power to the HC05 for a second to boot back into AT-command mode
+    hwlib::pin_out &select; ///< Pin used to change the HC05 from the slave loop into the AT-command mode
+    hwlib::pin_out &power;  ///< Pin used to interupt the power to the HC05 for a second to boot back into AT-command mode
 
   private:
     template <size_t size>
@@ -113,7 +111,7 @@ class HC05 {
     }
 
   public:
-    HC05(IOStream &connection);
+    HC05(IOStream &connection, hwlib::pin_out &initselect, hwlib::pin_out &initpower);
 
     bool testConnection();
 
