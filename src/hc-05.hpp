@@ -8,7 +8,7 @@
 #ifndef HC05_HPP
 #define HC05_HPP
 
-#include "UART_LIB/uart_connection.hpp"
+#include "UART_LIB/io_stream.hpp"
 #include "wrap-hwlib.hpp"
 #include <array>
 
@@ -47,25 +47,26 @@ class HC05 {
         pair,
         role,
         reset,
-        bind
+        bind,
+        initspp
     }; ///< Used by sendCommand to create a commandString
 
     const std::array<hwlib::string<7>, 12> BaudRateValues = {"1200",  "2400",   "4800",   "9600",   "19200",  "38400",
                                                              "57600", "115200", "230400", "460800", "921600", "1382400"};
     const std::array<hwlib::string<1>, 13> numberStrings = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C"};
-    const std::array<hwlib::string<maxNameSize>, 13> commands = {
-        "AT",      "AT+NAME=", "AT+PSWD=", "AT+UART=", "AT+LINK=", "AT+DISC", "AT+CMODE=",
-        "AT+ORGL", "AT+FSAD=", "AT+PAIR=", "AT+ROLE=", "AT+RESET", "AT+BIND="};
-    // const std::array<hwlib::string<maxNameSize>, 4> responses = {"OK", "OKsetname", "OKsetpin", "OKsetbaud"};
-    // uint8_t discoveredDevices[32]; ///< Used for storing the connection id of a discovered device.
+    const std::array<hwlib::string<maxNameSize>, 14> commands = {
+        "AT",      "AT+NAME=", "AT+PSWD=", "AT+UART=", "AT+LINK=", "AT+DISC",  "AT+CMODE=",
+        "AT+ORGL", "AT+FSAD=", "AT+PAIR=", "AT+ROLE=", "AT+RESET", "AT+BIND=", "AT+INIT"};
     BaudRates baudrate = BaudRates::SIX;
 
-    UARTConnection connection;
+    IOStream &connection;
     hwlib::string<maxNameSize> name; ///< Used for storing the name of this device.
     hwlib::string<pinSize> pincode;  ///< Used for storing a local version of the 4 digit pincode saved as a byte
-    int mode = 1;
-    hwlib::target::pin_out select = hwlib::target::pin_out(hwlib::target::pins::d22);
-    hwlib::target::pin_out power = hwlib::target::pin_out(hwlib::target::pins::d24);
+    bool mode = 1;
+    hwlib::target::pin_out select = hwlib::target::pin_out(
+        hwlib::target::pins::d22); ///< Pin used to change the HC05 from the slave loop into the AT-command mode
+    hwlib::target::pin_out power = hwlib::target::pin_out(
+        hwlib::target::pins::d24); ///< Pin used to interupt the power to the HC05 for a second to boot back into AT-command mode
 
   private:
     template <size_t size>
@@ -91,7 +92,7 @@ class HC05 {
     }
 
     template <size_t size>
-    bool sendCommand(CommandTypes commandType, hwlib::string<size> data = "") {
+    bool sendCommand(CommandTypes commandType, hwlib::string<size> data = "", uint64_t timeout = 1'000'000) {
         // const auto &expectedResponseMessage = responses[static_cast<int>(commandType)];
         // Create command
         auto command = commands[static_cast<int>(commandType)];
@@ -104,7 +105,7 @@ class HC05 {
         // Get response
         // TODO: Try to get length to work, currently gives the value of 'expectedResponseMessage' is not usable in a constant
         // expression auto result = receive<expectedResponseMessage.length()>();
-        auto result = receive<maxMessageSize>();
+        auto result = receive<maxMessageSize>(timeout);
         auto acknowledgement = findAcknowledgement<maxMessageSize>(result);
 
         // Check if respose is as expected
@@ -112,14 +113,14 @@ class HC05 {
     }
 
   public:
-    HC05();
+    HC05(IOStream &connection);
 
     bool testConnection();
 
     /**
      * @brief Used to connect to other devices.
      *
-     * Connect to the specified device ID. To get the device ID use function "search".
+     * Connect to the specified device ID.
      *
      * @param[in]     deviceID    An unique ID of a device.
      */
@@ -143,6 +144,7 @@ class HC05 {
      * @brief Used to set the name of the chip. This is not an ID
      *
      * @param[in]     name    A reference to a string holding the name.
+     * @return True if set has succeeded and false if not
      */
     bool setName(const hwlib::string<50> &newName);
 
@@ -162,15 +164,17 @@ class HC05 {
      * The pincode is 4 digit and saved as a hwlib::string
      *
      * @param[in]     newPincode    The new pincode
+     * @return True if set has succeeded and false if not
      */
     bool setPincode(hwlib::string<pinSize> newPincode);
 
     /**
      * @brief Used to pair with other devices.
      *
-     * Pair with the specified device ID. To get the device ID use function "search".
+     * Pair with the specified device ID.
      *
      * @param[in]     deviceID    An unique ID of a device.
+     * @return True if set has succeeded and false if not
      */
     bool pair(hwlib::string<maxMessageSize> deviceID);
 
@@ -189,21 +193,27 @@ class HC05 {
         hwlib::string<size> result;
 
         // Wait for response, timeout at when it takes to long
-        auto start = hwlib::now_us();
-        while (connection.available() < size && hwlib::now_us() - start < timeOut) {
-            // hwlib::cout << connection.available();
+        volatile auto start = hwlib::now_us();
+        while (connection.count_available() < size && hwlib::now_us() - start < timeOut) {
+            // hwlib::cout << connection.char_available();
         }
 
         // Write data to string
         for (unsigned int i = 0; i < size; i++) {
-            result[i] = connection.receive();
+            if (connection.count_available()) {
+                result[i] = connection.getc();
+                // hwlib::cout << connection.getc() << hwlib::endl;
+            }
         }
 
         // Clear uart buffer
+        start = hwlib::now_us();
         while (hwlib::now_us() - start < timeOut) {
+            connection.getc(); // Without this the compiler will remove the loop
+            // hwlib::cout << "Test" << hwlib::endl;
         }
-        for (size_t i = 0; i < connection.available(); ++i) {
-            connection.receive();
+        for (size_t i = 0; i < connection.count_available(); ++i) {
+            connection.getc();
         }
 
         return result;
@@ -214,7 +224,7 @@ class HC05 {
      *
      * This function will send the data provided.
      *
-     * @param[in]     data    A pointer to a uint8_t data array.
+     * @param[in]     msg   a hwlib::string containing the message.
      */
     void send(hwlib::string<maxMessageSize> msg);
 
@@ -222,39 +232,113 @@ class HC05 {
      * @brief Used to get the current baudrate of this device.
      *
      * This function will return the current baudrate used.
+     * @return hwlib::string containing the baudrate
      */
     hwlib::string<7> getBaud();
 
     /**
      * @brief Used to set the baud rate of the connection.
+     *
      * @param[in]     baud    An integer specifying the baud rate.
+     * @return True if set has succeeded and false if not
      */
     bool setBaud(BaudRates baud);
 
-    void setMode(int master);
+    /**
+     * @brief Used to set the mode/mode pin of the HC05
+     *
+     * @param[in]    bool saying if the chip has to be master or not
+     */
+    void setMode(bool master);
 
-    int getMode();
+    /**
+     * @brief returns current mode
+     *
+     * @return bool saying if the chip has to be master or not
+     */
+    bool getMode();
 
-    hwlib::string<maxMessageSize> receiveData();
+    /**
+     * @brief function returning the received data as a string
+     *
+     * @param[in] uint64_t containing the timeout time that will be used
+     * @return hwlib::string containing the received data
+     */
+    hwlib::string<maxMessageSize> receiveData(uint64_t timeout = 1'000'000);
 
+    /**
+     * @brief function returning the length of the received data
+     *
+     * @param[in] hwlib::string containing the data of which you want the length
+     * @return an integer telling you what the current size of the string is
+     */
     int checkDataLength(hwlib::string<HC05::maxMessageSize> data);
 
+    /**
+     * @brief function returning the version of the chip as a string
+     *
+     * @return hwlib::string containing the received data + acknowledgement
+     */
     hwlib::string<maxMessageSize> getVersion();
 
+    /**
+     * @brief function setting the connectmode of the chip
+     *
+     * @param[in] the mode you want to use as an integer. see datasheet for more info.
+     * @return True if chip acknowlegdes the command, false if failed
+     */
     bool setConnectMode(int mode);
 
+    /**
+     * @brief function that resets all settings set by the AT commands
+     *
+     * @return True if chip acknowlegdes the command, false if failed
+     */
     bool resetSettings();
 
+    /**
+     * @brief function that searches if the device is in the autheticated device list.
+     *
+     * @param[in] hwlib::string containing the deviceID of the chip you want to look up
+     * @return True if chip acknowlegdes the command, false if failed
+     */
     bool searchAuthenticatedDevice(hwlib::string<maxMessageSize> deviceID);
 
+    /**
+     * @brief function setting the role of the chip
+     *
+     * @param[in] the role you want to use as an integer. see datasheet for more info.
+     * @return True if chip acknowlegdes the command, false if failed
+     */
     bool setRole(int role);
 
+    /**
+     * @brief function soft-resetting the chip, used after setting the role.
+     *
+     * @return True if chip acknowlegdes the command, false if failed
+     */
     bool reset();
 
+    /**
+     * @brief function binding the chip to another device
+     *
+     * @param[in] hwlib::string containing the deviceID of the chip you want to bind to
+     * @return True if chip acknowlegdes the command, false if failed
+     */
     bool bind(hwlib::string<maxMessageSize> deviceID);
 
-    hwlib::string<HC05::maxMessageSize> initSPP();
+    /**
+     * @brief function initializing the SPP profile lib. used if you want to connect to another device.
+     *
+     * @return True if chip acknowlegdes the command, false if failed
+     */
+    bool initSPP();
 
+    /**
+     * @brief function used for scanning devices
+     *
+     * @return hwlib::string containing the complete response of the HC05 chip.
+     */
     hwlib::string<maxMessageSize> inquiryDevices();
 };
 
