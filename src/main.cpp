@@ -1,4 +1,5 @@
 #include "UART_LIB/uart_connection.hpp"
+#include "hc-05.hpp"
 #include "hc-06.hpp"
 #include "wrap-hwlib.hpp"
 
@@ -12,12 +13,6 @@ int main() {
         hwlib::cout << "Set baudrate to: " << bluetooth.getBaud() << hwlib::endl;
     } else {
         hwlib::cout << "Could not set baudrate" << hwlib::endl;
-    }
-
-    if (bluetooth.setName("R2D2-B1")) {
-        hwlib::cout << "Renamed module" << hwlib::endl;
-    } else {
-        hwlib::cout << "Could not rename module" << hwlib::endl;
     }
 
     if (bluetooth.setPincode("1234")) {
