@@ -10,7 +10,7 @@ bool HC05::testConnection() {
     return sendCommand<maxMessageSize>(CommandTypes::test);
 }
 
-bool HC05::connect(hwlib::string<maxMessageSize> deviceID) {
+bool HC05::connect(const hwlib::string<maxMessageSize> &deviceID) {
     return sendCommand<maxMessageSize>(CommandTypes::connect, deviceID, (uint64_t)5'000'000);
 }
 
@@ -51,7 +51,7 @@ bool HC05::pair(hwlib::string<maxMessageSize> deviceID) {
     return sendCommand<maxMessageSize>(CommandTypes::pair, deviceID, (uint64_t)9'000'000);
 }
 
-void HC05::send(hwlib::string<maxMessageSize> msg) {
+void HC05::send(const hwlib::string<maxMessageSize> &msg) {
     connection << msg;
 }
 
@@ -88,7 +88,7 @@ hwlib::string<HC05::maxMessageSize> HC05::receiveData(uint64_t timeout) {
     return data;
 }
 
-int HC05::checkDataLength(hwlib::string<HC05::maxMessageSize> data) {
+int HC05::checkDataLength(const hwlib::string<HC05::maxMessageSize> &data) {
     int size = 0;
     while (data[size] != 255) {
         size++;
@@ -110,7 +110,7 @@ bool HC05::resetSettings() {
     return sendCommand<maxMessageSize>(CommandTypes::restore);
 }
 
-bool HC05::searchAuthenticatedDevice(hwlib::string<maxMessageSize> deviceID) {
+bool HC05::searchAuthenticatedDevice(const hwlib::string<maxMessageSize> &deviceID) {
     return sendCommand<maxMessageSize>(CommandTypes::fsad, deviceID);
 }
 
@@ -122,7 +122,7 @@ bool HC05::reset() {
     return sendCommand<maxMessageSize>(CommandTypes::reset);
 }
 
-bool HC05::bind(hwlib::string<maxMessageSize> deviceID) {
+bool HC05::bind(const hwlib::string<maxMessageSize> &deviceID) {
     return sendCommand<maxMessageSize>(CommandTypes::bind, deviceID);
 }
 

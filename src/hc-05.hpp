@@ -104,10 +104,9 @@ class HC05 {
         // TODO: Try to get length to work, currently gives the value of 'expectedResponseMessage' is not usable in a constant
         // expression auto result = receive<expectedResponseMessage.length()>();
         auto result = receive<maxMessageSize>(timeout);
-        auto acknowledgement = findAcknowledgement<maxMessageSize>(result);
 
         // Check if respose is as expected
-        return acknowledgement;
+        return findAcknowledgement<maxMessageSize>(result);
     }
 
   public:
@@ -122,7 +121,7 @@ class HC05 {
      *
      * @param[in]     deviceID    An unique ID of a device.
      */
-    bool connect(hwlib::string<maxMessageSize> deviceID);
+    bool connect(const hwlib::string<maxMessageSize> &deviceID);
 
     /**
      * @brief Used to disconnect from other devices.
@@ -224,7 +223,7 @@ class HC05 {
      *
      * @param[in]     msg   a hwlib::string containing the message.
      */
-    void send(hwlib::string<maxMessageSize> msg);
+    void send(const hwlib::string<maxMessageSize> &msg);
 
     /**
      * @brief Used to get the current baudrate of this device.
@@ -270,7 +269,7 @@ class HC05 {
      * @param[in] hwlib::string containing the data of which you want the length
      * @return an integer telling you what the current size of the string is
      */
-    int checkDataLength(hwlib::string<HC05::maxMessageSize> data);
+    int checkDataLength(const hwlib::string<HC05::maxMessageSize> &data);
 
     /**
      * @brief function returning the version of the chip as a string
@@ -300,7 +299,7 @@ class HC05 {
      * @param[in] hwlib::string containing the deviceID of the chip you want to look up
      * @return True if chip acknowlegdes the command, false if failed
      */
-    bool searchAuthenticatedDevice(hwlib::string<maxMessageSize> deviceID);
+    bool searchAuthenticatedDevice(const hwlib::string<maxMessageSize> &deviceID);
 
     /**
      * @brief function setting the role of the chip
@@ -323,7 +322,7 @@ class HC05 {
      * @param[in] hwlib::string containing the deviceID of the chip you want to bind to
      * @return True if chip acknowlegdes the command, false if failed
      */
-    bool bind(hwlib::string<maxMessageSize> deviceID);
+    bool bind(const hwlib::string<maxMessageSize> &deviceID);
 
     /**
      * @brief function initializing the SPP profile lib. used if you want to connect to another device.
