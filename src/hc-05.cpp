@@ -1,6 +1,6 @@
 #include "hc-05.hpp"
 
-HC05::HC05(IOStream &connection, hwlib::pin_out &initselect, hwlib::pin_out &initpower)
+HC05::HC05(UARTLib::UARTConnection &connection, hwlib::pin_out &initselect, hwlib::pin_out &initpower)
     : connection(connection), select(initselect), power(initpower) {
     power.set(1);
     setMode(mode);
@@ -90,10 +90,16 @@ hwlib::string<HC05::maxMessageSize> HC05::receiveData(uint64_t timeout) {
 
 int HC05::checkDataLength(const hwlib::string<HC05::maxMessageSize> &data) {
     int size = 0;
-    while (data[size] != 255) {
+
+    for (int i = 0; i < maxMessageSize; i++) {
+        if (static_cast<uint8_t>(data[size]) == 255) {
+            return size;
+        }
+
         size++;
     }
-    return size;
+
+    return 0;
 }
 
 hwlib::string<HC05::maxMessageSize> HC05::getVersion() {

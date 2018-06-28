@@ -1,12 +1,12 @@
-#include "UART_LIB/uart_connection.hpp"
 #include "hc-05.hpp"
 #include "hc-06.hpp"
+#include "uart_lib.hpp"
 #include "wrap-hwlib.hpp"
 
 int main() {
     WDT->WDT_MR = WDT_MR_WDDIS;
     hwlib::wait_ms(1000);
-    UARTConnection connection(9600, UARTController::ONE);
+    UARTLib::HardwareUART connection(9600, UARTLib::UARTController::ONE);
     Bluetooth::HC06 bluetooth(connection);
 
     if (bluetooth.setBaud(Bluetooth::HC06::BaudRates::FOUR)) {

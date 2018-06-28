@@ -2,7 +2,7 @@
 
 namespace Bluetooth {
 
-HC06::HC06(IOStream &connection) : connection(connection) {
+HC06::HC06(UARTLib::UARTConnection &connection) : connection(connection) {
 }
 
 bool HC06::testConnection() {
