@@ -1,6 +1,6 @@
-#include "uart_lib.hpp"
 #include "hc-05.hpp"
 #include "hc-06.hpp"
+#include "uart_lib.hpp"
 #include "wrap-hwlib.hpp"
 
 int main() {
