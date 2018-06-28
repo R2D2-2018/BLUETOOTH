@@ -1,6 +1,6 @@
 #include "hc-05.hpp"
 
-HC05::HC05(IOStream &connection, hwlib::pin_out &initselect, hwlib::pin_out &initpower)
+HC05::HC05(UARTLib::UARTConnection &connection, hwlib::pin_out &initselect, hwlib::pin_out &initpower)
     : connection(connection), select(initselect), power(initpower) {
     power.set(1);
     setMode(mode);

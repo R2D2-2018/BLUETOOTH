@@ -8,7 +8,7 @@
 #ifndef HC05_HPP
 #define HC05_HPP
 
-#include "UART_LIB/io_stream.hpp"
+#include "uart_lib.hpp"
 #include "wrap-hwlib.hpp"
 #include <array>
 
@@ -59,7 +59,7 @@ class HC05 {
          "AT+FSAD=", "AT+PAIR=", "AT+ROLE=", "AT+RESET", "AT+BIND=", "AT+INIT"}};
     BaudRates baudrate = BaudRates::SIX;
 
-    IOStream &connection;
+    UARTLib::UARTConnection &connection;
     hwlib::string<maxNameSize> name; ///< Used for storing the name of this device.
     hwlib::string<pinSize> pincode;  ///< Used for storing a local version of the 4 digit pincode saved as a byte
     bool mode = 1;
@@ -110,7 +110,7 @@ class HC05 {
     }
 
   public:
-    HC05(IOStream &connection, hwlib::pin_out &initselect, hwlib::pin_out &initpower);
+    HC05(UARTLib::UARTConnection &connection, hwlib::pin_out &initselect, hwlib::pin_out &initpower);
 
     bool testConnection();
 
@@ -191,13 +191,13 @@ class HC05 {
 
         // Wait for response, timeout at when it takes to long
         volatile auto start = hwlib::now_us();
-        while (connection.count_available() < size && hwlib::now_us() - start < timeOut) {
+        while (static_cast<size_t>(connection.char_available()) < size && hwlib::now_us() - start < timeOut) {
             // hwlib::cout << connection.char_available();
         }
 
         // Write data to string
         for (unsigned int i = 0; i < size; i++) {
-            if (connection.count_available()) {
+            if (connection.char_available()) {
                 result[i] = connection.getc();
                 // hwlib::cout << connection.getc() << hwlib::endl;
             }
@@ -209,7 +209,7 @@ class HC05 {
             connection.getc(); // Without this the compiler will remove the loop
             // hwlib::cout << "Test" << hwlib::endl;
         }
-        for (size_t i = 0; i < connection.count_available(); ++i) {
+        for (size_t i = 0; i < connection.char_available(); ++i) {
             connection.getc();
         }
 

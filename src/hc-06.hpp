@@ -8,7 +8,7 @@
 #ifndef HC06_H
 #define HC06_H
 
-#include "UART_LIB/io_stream.hpp"
+#include "uart_lib.hpp"
 #include "wrap-hwlib.hpp"
 #include <array>
 
@@ -35,7 +35,7 @@ class HC06 {
 
   private:
     ///< Used for UART connection
-    IOStream &connection;
+    UARTLib::UARTConnection &connection;
 
     ///< Used by get and set name for hwlib::string
     static constexpr const uint8_t maxNameSize = 50;
@@ -161,7 +161,7 @@ class HC06 {
     }
 
   public:
-    explicit HC06(IOStream &connection);
+    explicit HC06(UARTLib::UARTConnection &connection);
 
     /*
      * @brief getter for connectedToDevice
@@ -237,13 +237,13 @@ class HC06 {
 
         // Wait for response, timeout at when it takes to long
         volatile auto start = hwlib::now_us();
-        while (connection.count_available() < size && hwlib::now_us() - start < timeOut) {
+        while (static_cast<size_t>(connection.char_available()) < size && hwlib::now_us() - start < timeOut) {
             // hwlib::cout << connection.char_available();
         }
 
         // Write data to string
         for (size_t i = 0; i < size; i++) {
-            if (connection.count_available() > 0) {
+            if (connection.char_available() > 0) {
                 result += connection.getc();
                 // hwlib::cout << result[i] << hwlib::endl;
             }
@@ -255,7 +255,7 @@ class HC06 {
             connection.getc(); // Without this the compiler will remove the loop
             // hwlib::cout << "Test" << hwlib::endl;
         }
-        for (size_t i = 0; i < connection.count_available(); ++i) {
+        for (size_t i = 0; i < connection.char_available(); ++i) {
             connection.getc();
         }
 
