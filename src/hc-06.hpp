@@ -73,7 +73,7 @@ class HC06 {
      *
      * Removes 0's before the first non zero value
      *
-     * @param       number       The number that needs to be converted
+     * @param[in]  number The number that needs to be converted
      * @return The number in string format
      */
     hwlib::string<0> uint32_tToString(uint32_t number) {
@@ -132,8 +132,8 @@ class HC06 {
      *
      * @tparam     size          Size of the data string
      * @tparam     responseSize  Size of the response string
-     * @param      commandType   The command type of the command that needs to be send
-     * @param      data          The data that needs to be send
+     * @param[in]  commandType   The command type of the command that needs to be send
+     * @param[in]  data          The data that needs to be send
      * @return If the command was successfully received at the device
      */
     template <size_t size, size_t responseSize>
