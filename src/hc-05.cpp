@@ -90,10 +90,16 @@ hwlib::string<HC05::maxMessageSize> HC05::receiveData(uint64_t timeout) {
 
 int HC05::checkDataLength(const hwlib::string<HC05::maxMessageSize> &data) {
     int size = 0;
-    while (data[size] != 255) {
+
+    for (int i = 0; i < maxMessageSize; i++) {
+        if (static_cast<uint8_t>(data[size]) == 255) {
+            return size;
+        }
+
         size++;
     }
-    return size;
+
+    return 0;
 }
 
 hwlib::string<HC05::maxMessageSize> HC05::getVersion() {
