@@ -14,6 +14,7 @@
 
 class HC05 {
   public:
+    ///< The different baudrate indices
     enum class BaudRates {
         ONE = 1,
         TWO,
@@ -34,6 +35,7 @@ class HC05 {
     static constexpr const uint8_t pinSize = 4;
     static constexpr const uint8_t maxMessageSize = 60;
 
+    ///< CommandTypes available for the HC-05
     enum class CommandTypes {
         test = 0,
         name,
@@ -67,6 +69,16 @@ class HC05 {
     hwlib::pin_out &power;  ///< Pin used to interupt the power to the HC05 for a second to boot back into AT-command mode
 
   private:
+    /**
+     * @brief Compare two strings
+     * 
+     * Compare two strings character per character and see if they are the same
+     * 
+     * @param[in]   string1 The first string
+     * @param[in]   string2 The second string
+     * @return      true    Strings are the same
+     * @retrun      false   Strings differ
+     */
     template <size_t size>
     bool compareString(const hwlib::string<size> &string1, const hwlib::string<size> &string2) {
         for (size_t i = 0; i < size; ++i) {
@@ -74,9 +86,17 @@ class HC05 {
                 return false;
             }
         }
-
         return true;
     }
+    /**
+     * @brief Check response for acknowledgement
+     * 
+     * Check if a received message contains an acknowledgement
+     * 
+     * @param[in]   string  Message to check
+     * @return      true    Message contains acknowledgement
+     * @return      false   Message does not contain acknowledgement
+     */
     template <size_t size>
     bool findAcknowledgement(const hwlib::string<size> &string) {
         for (size_t i = 0; i < size; ++i) {
@@ -89,6 +109,17 @@ class HC05 {
         return false;
     }
 
+    /**
+     * @brief Send a command to the HC-05
+     * 
+     * Send one of the predefined commands to the HC-05
+     * 
+     * @param[in]   command Type The command that needs to be sent
+     * @param[in]   data    The data that comes with the command
+     * @param[in]   timeout The time before the command times out in us
+     * @return      true    Message was sent successfully
+     * @return      false   Message was not sent successfully
+     */
     template <size_t size>
     bool sendCommand(CommandTypes commandType, hwlib::string<size> data = "", uint64_t timeout = 1'000'000) {
         // const auto &expectedResponseMessage = responses[static_cast<int>(commandType)];
@@ -112,6 +143,14 @@ class HC05 {
   public:
     HC05(UARTLib::UARTConnection &connection, hwlib::pin_out &initselect, hwlib::pin_out &initpower);
 
+    /**
+     * @brief Test if device is connected.
+     * 
+     * Send a command to the HC-05 to see if it is connected to another device.
+     * 
+     * @return  true    Device is connected
+     * @return  false   Device is not connected
+     */
     bool testConnection();
 
     /**
