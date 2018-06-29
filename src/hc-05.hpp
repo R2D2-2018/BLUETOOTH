@@ -56,9 +56,9 @@ class HC05 {
     const std::array<hwlib::string<7>, 12> BaudRateValues = {
         {"1200", "2400", "4800", "9600", "19200", "38400", "57600", "115200", "230400", "460800", "921600", "1382400"}};
     const std::array<hwlib::string<1>, 13> numberStrings = {{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C"}};
-    const std::array<hwlib::string<maxNameSize>, 14> commands = {
-        {"AT", "AT+NAME=", "AT+PSWD=", "AT+UART=", "AT+LINK=", "AT+DISC", "AT+CMODE=", "AT+ORGL",
-         "AT+FSAD=", "AT+PAIR=", "AT+ROLE=", "AT+RESET", "AT+BIND=", "AT+INIT"}};
+    const std::array<hwlib::string<maxNameSize>, 14> commands = {{"AT", "AT+NAME=", "AT+PSWD=", "AT+UART=", "AT+LINK=", "AT+DISC",
+                                                                  "AT+CMODE=", "AT+ORGL", "AT+FSAD=", "AT+PAIR=", "AT+ROLE=",
+                                                                  "AT+RESET", "AT+BIND=", "AT+INIT"}};
     BaudRates baudrate = BaudRates::SIX;
 
     UARTLib::UARTConnection &connection;
@@ -71,9 +71,9 @@ class HC05 {
   private:
     /**
      * @brief Compare two strings
-     * 
+     *
      * Compare two strings character per character and see if they are the same
-     * 
+     *
      * @param[in]   string1 The first string
      * @param[in]   string2 The second string
      * @return      true    Strings are the same
@@ -90,9 +90,9 @@ class HC05 {
     }
     /**
      * @brief Check response for acknowledgement
-     * 
+     *
      * Check if a received message contains an acknowledgement
-     * 
+     *
      * @param[in]   string  Message to check
      * @return      true    Message contains acknowledgement
      * @return      false   Message does not contain acknowledgement
@@ -111,9 +111,9 @@ class HC05 {
 
     /**
      * @brief Send a command to the HC-05
-     * 
+     *
      * Send one of the predefined commands to the HC-05
-     * 
+     *
      * @param[in]   command Type The command that needs to be sent
      * @param[in]   data    The data that comes with the command
      * @param[in]   timeout The time before the command times out in us
@@ -145,9 +145,9 @@ class HC05 {
 
     /**
      * @brief Test if device is connected.
-     * 
+     *
      * Send a command to the HC-05 to see if it is connected to another device.
-     * 
+     *
      * @return  true    Device is connected
      * @return  false   Device is not connected
      */
