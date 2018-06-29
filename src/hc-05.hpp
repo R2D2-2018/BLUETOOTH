@@ -74,6 +74,7 @@ class HC05 {
      *
      * Compare two strings character per character and see if they are the same
      *
+     * @tparam      size    Length of the input strings
      * @param[in]   string1 The first string
      * @param[in]   string2 The second string
      * @return      true    Strings are the same
@@ -93,6 +94,7 @@ class HC05 {
      *
      * Check if a received message contains an acknowledgement
      *
+     * @tparam      size    Length of the input string
      * @param[in]   string  Message to check
      * @return      true    Message contains acknowledgement
      * @return      false   Message does not contain acknowledgement
@@ -114,6 +116,7 @@ class HC05 {
      *
      * Send one of the predefined commands to the HC-05
      *
+     * @tparam      size    Length of the data string
      * @param[in]   command Type The command that needs to be sent
      * @param[in]   data    The data that comes with the command
      * @param[in]   timeout The time before the command times out in us
