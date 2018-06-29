@@ -25,3 +25,11 @@ TEST_CASE("Bluetooth parity check mode HC-06", "[HC06]") {
     hc06.setParityCheckMode(Bluetooth::HC06::ParityModes::EVEN);
     REQUIRE(hc06.getParityCheckMode() == Bluetooth::HC06::ParityModes::EVEN);
 }
+
+TEST_CASE("Bluetooth mode HC-05", "[HC05]") {
+    UARTLib::MockUART connection(9600, UARTLib::UARTController::ONE);
+    hwlib::test::pin_out<> pin1, pin2;
+    HC05 hc05(connection, pin1, pin2);
+    hc05.setMode(false);
+    REQUIRE(hc05.getMode() == false);
+}
